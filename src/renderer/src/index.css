@@ -1,0 +1,18 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* En un archivo CSS, por ejemplo, fonts.css */
+/* En un archivo CSS, por ejemplo, fonts.css */
+@font-face {
+  font-family: 'Changa';
+  font-style: normal;
+  font-weight: 400; /* Por ejemplo, para Changa Regular */
+  src: url('../../../public/fonts/Changa-VariableFont_wght.ttf') format('truetype');
+}
+
+/* Repite este bloque para cada estilo de fuente que desees utilizar */
+.font-changa {
+  font-family: 'Changa', sans-serif;
+}
