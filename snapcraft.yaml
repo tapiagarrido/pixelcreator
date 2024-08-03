@@ -1,0 +1,24 @@
+name: pixel-creator
+version: "1.0"
+summary: Generador de plantillas pixeladas
+description: |
+  Aplicación que permite editar parámetros de tamaño, colores, luminosidad de una imagen para luego convertirla a un formato pixelado para ser utilizado en arte hammabeads.
+
+confinement: strict
+base: core22
+
+apps:
+  pixel-creator:
+    command: bin/pixel-creator
+    plugs: [x11, unity7, browser-support, network, gsettings, pulseaudio, opengl]
+
+parts:
+  pixel-creator:
+    plugin: npm
+    npm-node-version: 21.5.0
+    npm-include-node: true
+    source: .
+    stage-packages:
+      - libnotify-bin
+      - gvfs-bin
+

@@ -4,7 +4,7 @@ import PixelActions from '../components/process/PixelActions';
 
 const ProcessElementPage = () => {
   const [image, setImage] = useState(null);
-  const [readyToDownload, setReadyToDownloas] = useState(false);
+  const [readyToDownload, setReadyToDownload] = useState(false);
   const [componentPixel, setComponentPixel] = useState(false);
   const [brightness, setBrightness] = useState(1);
   const [contrast, setContrast] = useState(1);
@@ -73,7 +73,7 @@ const ProcessElementPage = () => {
 
   const handleProcessImage = (processedImage) => {
     setImage(processedImage);
-    setReadyToDownloas(true);
+    setReadyToDownload(true);
   }
 
   const handleDownloadImage = () => {
@@ -93,11 +93,26 @@ const ProcessElementPage = () => {
     }
   };
 
+  const handleRestartComponent = () => {
+    setImage(null);
+    setReadyToDownload(false);
+    setComponentPixel(false);
+    setBrightness(1);
+    setContrast(1);
+    setContrast(1);
+    setBlur(0);
+    setSaturation(1);
+    setGrayscale(0);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
 
   return (
     <div className='flex w-full gap-8 fixed'>
       {componentPixel ?
-        <PixelActions imageIn={image} onProcessImage={handleProcessImage} />
+        <PixelActions imageIn={image} onProcessImage={handleProcessImage} onRestart={handleRestartComponent} />
         :
         <div className='w-1/2 font-changa text-xl'>
           <div className=''>
@@ -112,7 +127,7 @@ const ProcessElementPage = () => {
                   <p className="mb-2 text-sm text-gray-600 dark:text-gray-500"><span className="font-semibold">Click para buscar imagen</span></p>
                   <p className="text-xs text-gray-600 dark:text-gray-500">SVG, PNG, JPG o webp</p>
                 </div>
-                <input id="dropzone-file" type="file" onChange={handleImageSelected} className="hidden" />
+                <input id="dropzone-file" type="file" accept='image/*' onChange={handleImageSelected} className="hidden" />
               </label>
             </div>
 
@@ -178,11 +193,12 @@ const ProcessElementPage = () => {
                 <span>{grayscale}</span>
               </div>
             </div>
-
-            <button className='flex mt-12 items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 p-2 rounded-xl border-blue-950 border' onClick={handleNextStage} disabled={!image}>
-              Siguiente
-              <GrCaretNext />
-            </button>
+            <div className='flex justify-end'>
+              <button className='flex mt-12 items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 p-2 rounded-xl border-blue-950 border disabled:bg-gray-700' onClick={handleNextStage} disabled={!image}>
+                Siguiente
+                <GrCaretNext />
+              </button>
+            </div>
           </div>
         </div>
       }

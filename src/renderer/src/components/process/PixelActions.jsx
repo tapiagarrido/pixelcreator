@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import pixelArt from "../../../../../public/images/pixel_process.svg"
+import { IoChevronBackCircle } from "react-icons/io5";
 
-const PixelActions = ({ imageIn, onProcessImage }) => {
+
+const PixelActions = ({ imageIn, onProcessImage, onRestart }) => {
   const [pixelCountWidth, setPixelCountWidth] = useState(50);
-  const [direccion, setDireccion] = useState("ancho");
+  const [direction, setDirection] = useState("ancho");
+  const [enabledAction, SetEnabledAction] = useState(true);
   const borderWidth = 0.8;
 
   const handlePixelCountWidthChange = (event) => {
@@ -18,16 +21,34 @@ const PixelActions = ({ imageIn, onProcessImage }) => {
     const image = new Image();
     image.src = imageIn;
 
+    let pixelSize;
+    let numCellsHeight;
+    let numCellsWidth;
+    const numberCells = pixelCountWidth;
+
     image.onload = () => {
 
-      // Cantidad de píxeles especificada en el ancho
-      const numCellsWidth = pixelCountWidth;
+      if (direction.includes("ancho")) {
+        // Calcular el tamaño real de cada píxel
+        pixelSize = image.width / numberCells;
 
-      // Calcular el tamaño real de cada píxel
-      const pixelSize = image.width / numCellsWidth;
+        //Asignar el numero de pixeles en el ancho
+        numCellsWidth = numberCells;
 
-      // Calcular el número de píxeles en el alto para mantener la proporción
-      const numCellsHeight = Math.ceil(image.height / pixelSize);
+        // Calcular el número de píxeles en el alto para mantener la proporción
+        numCellsHeight = Math.ceil(image.height / pixelSize);
+
+      } else {
+        // Calcular el tamaño real de cada pixel
+        pixelSize = image.height / numberCells;
+
+        //Asignar el numero de pixeles en el alto
+        numCellsHeight = numberCells;
+
+        //Calcular el numero de pixeles en el ancho
+        numCellsWidth = Math.ceil(image.width / pixelSize);
+      }
+
 
       // Ajustar el tamaño del canvas
       canvas.width = image.width;
@@ -68,6 +89,7 @@ const PixelActions = ({ imageIn, onProcessImage }) => {
 
       // Devolver la imagen procesada
       onProcessImage(canvas.toDataURL());
+      SetEnabledAction(false);
     };
   };
 
@@ -104,9 +126,9 @@ const PixelActions = ({ imageIn, onProcessImage }) => {
         <div className='w-1/3'>
           Cantidad de píxeles:
         </div>
-        <select className='w-1/3' onChange={(event)=>setDireccion(event.target.value)}>
-          <option value="ancho">Ancho</option>
-          <option value="alto">Alto</option>
+        <select className='w-1/3 border rounded-lg bg-gray-50' onChange={(event) => setDirection(event.target.value)}>
+          <option value={"ancho"}>Ancho</option>
+          <option value={"alto"}>Alto</option>
         </select>
         <input
           type="number"
@@ -117,15 +139,17 @@ const PixelActions = ({ imageIn, onProcessImage }) => {
         />
       </div>
       <div className='text-sm italic'>
-        <p>{`El valor de referencia sera el ${direccion} de la imagen y se ajustara automaticamente para mantener las dimensiones`}</p>
+        <p>{`El valor de referencia sera el ${direction} de la imagen y se ajustara automaticamente para mantener las dimensiones`}</p>
       </div>
-      <div className='flex justify-end mt-32'>
-      <button
-        onClick={handleProcessImage}
-        className='p-2 bg-blue-700 rounded-xl text-white border border-blue-900 hover:bg-blue-800'
-      >
-        Pixelar Imagen
-      </button>
+      <div className='flex justify-end mt-32 gap-4'>
+        <button
+          onClick={handleProcessImage}
+          className='p-2 bg-blue-700 rounded-xl text-white border border-blue-900 hover:bg-blue-800 disabled:bg-gray-700'
+          disabled={!enabledAction}
+        >
+          Pixelar Imagen
+        </button>
+        {!enabledAction ? <button onClick={onRestart} className='p-2 bg-amber-700 rounded-xl text-3xl text-white border border-amber-900 hover:bg-amber-800'><IoChevronBackCircle /></button> : null}
       </div>
     </div>
   );
