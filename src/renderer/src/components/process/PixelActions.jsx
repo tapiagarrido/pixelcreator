@@ -4,7 +4,7 @@ import { IoChevronBackCircle } from "react-icons/io5";
 
 
 const PixelActions = ({ imageIn, onProcessImage, onRestart }) => {
-  const [pixelCountWidth, setPixelCountWidth] = useState(50);
+  const [pixelCountWidth, setPixelCountWidth] = useState(52);
   const [direction, setDirection] = useState("ancho");
   const [enabledAction, SetEnabledAction] = useState(true);
   const borderWidth = 0.8;
@@ -17,81 +17,81 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart }) => {
   const handleProcessImage = () => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
     const image = new Image();
     image.src = imageIn;
 
-    let pixelSize;
-    let numCellsHeight;
-    let numCellsWidth;
-    const numberCells = pixelCountWidth;
-
     image.onload = () => {
-
-      if (direction.includes("ancho")) {
-        // Calcular el tamaño real de cada píxel
-        pixelSize = image.width / numberCells;
-
-        //Asignar el numero de pixeles en el ancho
-        numCellsWidth = numberCells;
-
-        // Calcular el número de píxeles en el alto para mantener la proporción
-        numCellsHeight = Math.ceil(image.height / pixelSize);
-
-      } else {
-        // Calcular el tamaño real de cada pixel
-        pixelSize = image.height / numberCells;
-
-        //Asignar el numero de pixeles en el alto
-        numCellsHeight = numberCells;
-
-        //Calcular el numero de pixeles en el ancho
-        numCellsWidth = Math.ceil(image.width / pixelSize);
+      if (image.width <= 0 || image.height <= 0) {
+        console.error('Image dimensions are invalid');
+        return;
       }
 
-
-      // Ajustar el tamaño del canvas
       canvas.width = image.width;
       canvas.height = image.height;
 
-      // Redibujar la imagen en el canvas
+      if (canvas.width === 0 || canvas.height === 0) {
+        console.error('Canvas dimensions are invalid');
+        return;
+      }
+
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-      // Aplicar el efecto de pixelación con borde
+      let pixelSize;
+      let numCellsHeight;
+      let numCellsWidth;
+      const numberCells = pixelCountWidth;
+
+      if (direction.includes("ancho")) {
+        pixelSize = image.width / numberCells;
+        numCellsWidth = numberCells;
+        numCellsHeight = Math.ceil(image.height / pixelSize);
+      } else {
+        pixelSize = image.height / numberCells;
+        numCellsHeight = numberCells;
+        numCellsWidth = Math.ceil(image.width / pixelSize);
+      }
+
       for (let y = 0; y < numCellsHeight; y++) {
         for (let x = 0; x < numCellsWidth; x++) {
-          // Definir el tamaño de la celda
           const startX = x * pixelSize;
           const startY = y * pixelSize;
           const endX = (x + 1) * pixelSize;
           const endY = (y + 1) * pixelSize;
 
-          // Asegurarse de que las coordenadas no se salgan de los límites del canvas
           const clipX = Math.min(canvas.width, endX);
           const clipY = Math.min(canvas.height, endY);
           const clipWidth = clipX - startX;
           const clipHeight = clipY - startY;
 
-          // Obtener el color promedio de la celda
-          const imageData = ctx.getImageData(startX, startY, clipWidth, clipHeight);
-          const avgColor = getCellColor(imageData);
+          if (clipWidth <= 0 || clipHeight <= 0) {
+            console.error('Invalid clipping area');
+            continue;
+          }
 
-          // Dibujar el bloque de color promedio en la celda
-          ctx.fillStyle = avgColor;
-          ctx.fillRect(startX, startY, clipWidth, clipHeight);
+          try {
+            const imageData = ctx.getImageData(startX, startY, clipWidth, clipHeight);
+            const avgColor = getCellColor(imageData);
 
-          // Dibujar el borde alrededor de la celda
-          ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
-          ctx.lineWidth = borderWidth;
-          ctx.strokeRect(startX, startY, clipWidth, clipHeight);
+            ctx.fillStyle = avgColor;
+            ctx.fillRect(startX, startY, clipWidth, clipHeight);
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.lineWidth = borderWidth;
+            ctx.strokeRect(startX, startY, clipWidth, clipHeight);
+          } catch (e) {
+            console.error('Error getting image data', e);
+          }
         }
       }
 
-      // Devolver la imagen procesada
       onProcessImage(canvas.toDataURL());
       SetEnabledAction(false);
     };
+
+    image.onerror = () => {
+      console.error('Error loading image');
+    };
   };
+
 
   // Función para obtener el color promedio de los píxeles en el ImageData
   const getCellColor = (imageData) => {
@@ -135,7 +135,7 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart }) => {
           value={pixelCountWidth}
           onChange={handlePixelCountWidthChange}
           className='bg-gray-50 border w-1/3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-          min={50}
+          min={5}
         />
       </div>
       <div className='text-sm italic'>
@@ -145,7 +145,7 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart }) => {
         <button
           onClick={handleProcessImage}
           className='p-2 bg-blue-700 rounded-xl text-white border border-blue-900 hover:bg-blue-800 disabled:bg-gray-700'
-          disabled={!enabledAction}
+          disabled={!enabledAction || pixelCountWidth === 0 || !Number.isFinite(pixelCountWidth)}
         >
           Pixelar Imagen
         </button>
