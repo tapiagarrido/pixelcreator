@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GrCaretNext, GrDownload } from 'react-icons/gr';
+import { useLocation } from 'react-router-dom';
 import PixelActions from '../components/process/PixelActions';
 
 const ProcessElementPage = () => {
-  const [image, setImage] = useState(null);
+  const location = useLocation();
+  const navState = location.state || {};
+
+  const [image, setImage] = useState(navState.imageSrc || null);
   const [readyToDownload, setReadyToDownload] = useState(false);
-  const [componentPixel, setComponentPixel] = useState(false);
+  const [templateInfo, setTemplateInfo] = useState(null);
+  const [componentPixel, setComponentPixel] = useState(Boolean(navState.imageSrc));
   const [brightness, setBrightness] = useState(1);
   const [contrast, setContrast] = useState(1);
   const [blur, setBlur] = useState(0);
@@ -21,6 +26,8 @@ const ProcessElementPage = () => {
 
     reader.onloadend = () => {
       setImage(reader.result);
+      setReadyToDownload(false);
+      setTemplateInfo(null);
     };
 
     if (file) {
@@ -30,11 +37,12 @@ const ProcessElementPage = () => {
 
   const applyFilters = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     if (image) {
       const img = new Image();
-      img.src = image;
 
       img.onload = () => {
         canvas.width = img.width;
@@ -60,6 +68,13 @@ const ProcessElementPage = () => {
           ctx.drawImage(blurredCanvas, 0, 0);
         }
       };
+
+      img.onerror = () => {
+        console.error('No se pudo cargar la imagen para previsualizacion');
+      };
+
+      // Assign src after handlers to avoid missing load event with cached/blob URLs.
+      img.src = image;
     }
   };
 
@@ -71,8 +86,9 @@ const ProcessElementPage = () => {
     applyFilters();
   }, [image, brightness, contrast, blur, saturation, grayscale]);
 
-  const handleProcessImage = (processedImage) => {
+  const handleProcessImage = (processedImage, stats) => {
     setImage(processedImage);
+    setTemplateInfo(stats);
     setReadyToDownload(true);
   }
 
@@ -97,8 +113,8 @@ const ProcessElementPage = () => {
     setImage(null);
     setReadyToDownload(false);
     setComponentPixel(false);
+    setTemplateInfo(null);
     setBrightness(1);
-    setContrast(1);
     setContrast(1);
     setBlur(0);
     setSaturation(1);
@@ -110,11 +126,18 @@ const ProcessElementPage = () => {
 
 
   return (
-    <div className='flex w-full gap-8 fixed'>
+    <div className='w-full h-[calc(100vh-70px)] overflow-y-auto'>
+      <div className='flex flex-col lg:flex-row w-full gap-6 lg:gap-8 px-4 pb-8'>
       {componentPixel ?
-        <PixelActions imageIn={image} onProcessImage={handleProcessImage} onRestart={handleRestartComponent} />
+        <PixelActions
+          imageIn={image}
+          onProcessImage={handleProcessImage}
+          onRestart={handleRestartComponent}
+          defaultBeadWidth={navState.beadWidth}
+          defaultBeadHeight={navState.beadHeight}
+        />
         :
-        <div className='w-1/2 font-changa text-xl'>
+        <div className='w-full lg:w-1/2 font-changa text-xl'>
           <div className=''>
             <div>Cargue una imagen</div>
 
@@ -202,19 +225,49 @@ const ProcessElementPage = () => {
           </div>
         </div>
       }
-      <div className='w-1/2 relative'>
-        <div className='h-3/4 overflow-y-scroll'>
+      <div className='w-full lg:w-1/2 relative'>
+        <div className='max-h-[70vh] overflow-auto border border-gray-200 rounded-xl bg-white/40'>
           <canvas ref={canvasRef} className="w-full px-8" />
         </div>
         {
           readyToDownload ?
-            <div className='font-changa w-full flex justify-center mt-2'>
-              <button onClick={handleDownloadImage} className='px-2 py-1 text-black text-xl bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold'>
-                <GrDownload />
-              </button>
-            </div>
+            <>
+              <div className='font-changa w-full flex justify-center mt-2'>
+                <button onClick={handleDownloadImage} className='px-2 py-1 text-black text-xl bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold'>
+                  <GrDownload />
+                </button>
+              </div>
+
+              {templateInfo ? (
+                <div className='font-changa bg-white/70 rounded-xl border border-gray-200 p-4 mt-4 mx-8 max-h-52 overflow-y-auto'>
+                  <div className='font-bold text-lg mb-2'>Resumen de plantilla</div>
+                  <div className='text-sm'>
+                    <div>Tamano: {templateInfo.widthBeads} x {templateInfo.heightBeads} beads</div>
+                    <div>Total estimado: {templateInfo.totalBeads} beads</div>
+                    <div>Paleta: {templateInfo.paletteName}</div>
+                  </div>
+
+                  <div className='mt-3 text-sm font-semibold'>Conteo por color</div>
+                  <div className='mt-1 space-y-1'>
+                    {templateInfo.colorUsage.map((color) => (
+                      <div key={color.id} className='flex items-center justify-between text-sm bg-gray-50 rounded-lg px-2 py-1'>
+                        <div className='flex items-center gap-2'>
+                          <span
+                            className='inline-block w-4 h-4 rounded border border-black/20'
+                            style={{ backgroundColor: color.hex }}
+                          />
+                          <span>{color.name}</span>
+                        </div>
+                        <span className='font-semibold'>{color.count}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </>
             : null
         }
+      </div>
       </div>
     </div>
   );
