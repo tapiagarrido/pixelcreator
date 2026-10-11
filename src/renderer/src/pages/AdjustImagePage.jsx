@@ -53,6 +53,7 @@ const AdjustImagePage = () => {
   };
 
   const handleContinue = async () => {
+    if (!image || !croppedArea) return;
     try {
       const croppedImageUrl = await getCroppedImg(image, croppedArea);
       navigate('/process', {
@@ -68,6 +69,7 @@ const AdjustImagePage = () => {
   };
 
   const handleDownloadOnly = async () => {
+    if (!image || !croppedArea) return;
     try {
       const croppedImageUrl = await getCroppedImg(image, croppedArea);
       const fecha = new Date();
