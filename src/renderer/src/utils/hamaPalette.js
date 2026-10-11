@@ -76,7 +76,7 @@ export const getPalettesByBrand = (brand) =>
 export const getPaletteById = (paletteId) =>
   BUILTIN_BEAD_PALETTES.find((palette) => palette.id === paletteId)
 
-const hexToRgb = (hex) => {
+export const hexToRgb = (hex) => {
   const cleanHex = hex.replace('#', '')
   let expandedHex = cleanHex
 

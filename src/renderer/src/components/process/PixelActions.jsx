@@ -5,13 +5,13 @@ import {
   BEAD_BRANDS,
   BUILTIN_BEAD_PALETTES,
   createCustomPaletteFromXml,
-  findClosestPaletteColor,
   getPaletteById,
   getPalettesByBrand
 } from '../../utils/hamaPalette';
+import { buildBeadTemplate } from '../../utils/quantize';
 
 
-const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, defaultBeadHeight }) => {
+const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, defaultBeadWidth, defaultBeadHeight, hasResult }) => {
   const defaultBrand = BEAD_BRANDS[0]?.value || 'hama';
   const defaultPalette = getPalettesByBrand(defaultBrand)[0] || BUILTIN_BEAD_PALETTES[0];
   const [pixelCountReference, setPixelCountReference] = useState(defaultBeadWidth || 52);
@@ -26,7 +26,8 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
   const [xmlPaletteName, setXmlPaletteName] = useState('XML importado');
   const [xmlInput, setXmlInput] = useState('');
   const [xmlError, setXmlError] = useState('');
-  const [enabledAction, SetEnabledAction] = useState(true);
+  const [maxColors, setMaxColors] = useState(0);
+  const [dither, setDither] = useState(false);
   const borderWidth = 0.8;
   const selectedBuiltinPalette = getPaletteById(selectedPaletteId);
   const activePalette = customPalette || selectedBuiltinPalette || defaultPalette;
@@ -68,72 +69,29 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
     }
   };
 
-  const getCellAverageRgb = (imageData) => {
-    const { data } = imageData;
-    let r = 0;
-    let g = 0;
-    let b = 0;
-    let alphaPixels = 0;
-
-    for (let i = 0; i < data.length; i += 4) {
-      const alpha = data[i + 3];
-
-      if (alpha > 12) {
-        alphaPixels += 1;
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
-      }
-    }
-
-    if (alphaPixels === 0) {
-      return { r: 255, g: 255, b: 255 };
-    }
-
-    return {
-      r: Math.round(r / alphaPixels),
-      g: Math.round(g / alphaPixels),
-      b: Math.round(b / alphaPixels)
-    };
-  };
-
-  const handleProcessImage = () => {
+  const handleProcessImage = async () => {
     if (!imageIn) {
       console.error('No hay imagen para procesar');
       return;
     }
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    const image = new Image();
+    try {
+      // Imagen original con los filtros actuales aplicados
+      const sourceCanvas = await getSourceCanvas();
 
-    image.onload = () => {
-      if (image.width <= 0 || image.height <= 0) {
+      if (sourceCanvas.width <= 0 || sourceCanvas.height <= 0) {
         console.error('Image dimensions are invalid');
         return;
       }
 
-      canvas.width = image.width;
-      canvas.height = image.height;
-
-      if (canvas.width === 0 || canvas.height === 0) {
-        console.error('Canvas dimensions are invalid');
-        return;
-      }
-
-      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-      let pixelSize;
-      let numCellsHeight;
       let numCellsWidth;
+      let numCellsHeight;
       let referenceCount;
 
       if (sizeMode === 'exact') {
         numCellsWidth = exactBeadWidth;
         numCellsHeight = exactBeadHeight;
         referenceCount = numCellsWidth;
-        // pixelSize is variable per axis — use the width step as reference
-        pixelSize = image.width / numCellsWidth;
       } else {
         const numberCells = sizeMode === 'boards'
           ? parseInt(boardPreset, 10)
@@ -141,99 +99,47 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
         referenceCount = numberCells;
 
         if (!Number.isFinite(numberCells) || numberCells <= 0) {
-          console.error('Cantidad de beads invalida');
+          console.error('Cantidad de beads inválida');
           return;
         }
 
-        if (direction.includes("ancho")) {
-          pixelSize = image.width / numberCells;
+        if (direction.includes('ancho')) {
           numCellsWidth = numberCells;
-          numCellsHeight = Math.ceil(image.height / pixelSize);
+          numCellsHeight = Math.ceil(sourceCanvas.height / (sourceCanvas.width / numberCells));
         } else {
-          pixelSize = image.height / numberCells;
           numCellsHeight = numberCells;
-          numCellsWidth = Math.ceil(image.width / pixelSize);
+          numCellsWidth = Math.ceil(sourceCanvas.width / (sourceCanvas.height / numberCells));
         }
       }
 
-      // Tamaño de celda por eje (puede ser no cuadrado en modo exact)
-      const pixelSizeX = image.width / numCellsWidth;
-      const pixelSizeY = image.height / numCellsHeight;
+      const { dataUrl, stats } = buildBeadTemplate(sourceCanvas, {
+        cellsW: numCellsWidth,
+        cellsH: numCellsHeight,
+        palette: activePalette,
+        borderWidth,
+        maxColors,
+        dither
+      });
 
-      const colorCounter = new Map();
-
-      for (let y = 0; y < numCellsHeight; y++) {
-        for (let x = 0; x < numCellsWidth; x++) {
-          const startX = x * pixelSizeX;
-          const startY = y * pixelSizeY;
-          const endX = (x + 1) * pixelSizeX;
-          const endY = (y + 1) * pixelSizeY;
-
-          const clipX = Math.min(canvas.width, endX);
-          const clipY = Math.min(canvas.height, endY);
-          const clipWidth = clipX - startX;
-          const clipHeight = clipY - startY;
-
-          if (clipWidth <= 0 || clipHeight <= 0) {
-            console.error('Invalid clipping area');
-            continue;
-          }
-
-          try {
-            const imageData = ctx.getImageData(startX, startY, clipWidth, clipHeight);
-            const averageRgb = getCellAverageRgb(imageData);
-            const mappedColor = findClosestPaletteColor(averageRgb, activePalette.colors);
-
-            ctx.fillStyle = mappedColor.hex;
-            ctx.fillRect(startX, startY, clipWidth, clipHeight);
-            ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
-            ctx.lineWidth = borderWidth;
-            ctx.strokeRect(startX, startY, clipWidth, clipHeight);
-
-            colorCounter.set(mappedColor.id, (colorCounter.get(mappedColor.id) || 0) + 1);
-          } catch (e) {
-            console.error('Error getting image data', e);
-          }
-        }
-      }
-
-      const colorUsage = Array.from(colorCounter.entries())
-        .map(([id, count]) => {
-          const colorInfo = activePalette.colors.find((color) => color.id === id);
-          return {
-            id,
-            name: colorInfo?.name || id,
-            hex: colorInfo?.hex || '#000000',
-            count
-          };
-        })
-        .sort((a, b) => b.count - a.count);
-
-      onProcessImage(canvas.toDataURL(), {
-        widthBeads: numCellsWidth,
-        heightBeads: numCellsHeight,
-        totalBeads: numCellsWidth * numCellsHeight,
+      onProcessImage(dataUrl, {
+        ...stats,
         paletteName: activePalette.name,
+        brandLabel: activePalette.brandLabel,
         brand: activePalette.brand,
         source: activePalette.source,
         sizingMode: sizeMode,
         referenceAxis: direction,
         referenceCount,
-        colorUsage
+        maxColors,
+        dither
       });
-      SetEnabledAction(false);
-    };
-
-    image.onerror = () => {
-      console.error('Error loading image');
-    };
-
-    // Assign src after handlers to avoid missing the load event with cached/blob images.
-    image.src = imageIn;
+    } catch (error) {
+      console.error('Error generando la plantilla', error);
+    }
   };
 
   return (
-    <div className='w-full lg:w-1/2 font-changa text-xl'>
+    <div className='w-full font-changa text-xl'>
       <div className='text-2xl font-bold mb-4 text-gray-700 text-center'>Manipulación de píxeles</div>
 
       <div className='flex justify-center mb-16'>
@@ -272,7 +178,7 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
       </div>
 
       <div className='mb-4 border rounded-lg p-3 bg-blue-50/60 text-sm text-blue-900'>
-        Estas usando una paleta interna del sistema. Importar XML es opcional.
+        Estás usando una paleta interna del sistema. Importar XML es opcional.
       </div>
 
       <details className='mb-4 border rounded-lg p-3 bg-gray-50/70'>
@@ -281,7 +187,7 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
         </summary>
 
         <p className='text-xs text-gray-600 mt-2 mb-2'>
-          Solo usalo si quieres cargar una paleta externa. Si no, puedes continuar con las paletas internas.
+          Solo úsalo si quieres cargar una paleta externa. Si no, puedes continuar con las paletas internas.
         </p>
 
         <input
@@ -296,7 +202,7 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
           value={xmlInput}
           onChange={(event) => setXmlInput(event.target.value)}
           className='w-full border rounded-lg bg-white p-2 text-xs h-24'
-          placeholder='Pegue aqui el contenido del archivo Colours.xml'
+          placeholder='Pegue aquí el contenido del archivo Colours.xml'
         />
 
         {xmlError ? <div className='text-xs text-red-600 mt-1'>{xmlError}</div> : null}
@@ -387,12 +293,30 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
         </div>
       ) : null}
 
+      <div className='flex gap-4 items-baseline mb-4'>
+        <div className='w-1/3'>Máx. colores:</div>
+        <input
+          type='number'
+          min={0}
+          max={activePalette.colors.length}
+          value={maxColors}
+          onChange={(event) => setMaxColors(Math.max(0, parseInt(event.target.value, 10) || 0))}
+          className='w-1/3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5'
+        />
+        <div className='w-1/3 text-xs text-gray-600'>0 = sin límite</div>
+      </div>
+
+      <label className='flex gap-3 items-center mb-4 cursor-pointer select-none'>
+        <input type='checkbox' checked={dither} onChange={(event) => setDither(event.target.checked)} />
+        <span>Difuminado de color (dithering)</span>
+      </label>
+
       <div className='text-sm italic'>
-        <p>La imagen se convierte a una grilla de beads y cada celda se ajusta al color mas cercano de la paleta activa.</p>
+        <p>La imagen se convierte a una grilla de beads y cada celda se ajusta al color más cercano de la paleta activa.</p>
       </div>
 
       <div className='text-sm italic mt-1'>
-        <p>{`El valor de referencia sera el ${direction} de la imagen y la otra dimension se ajustara automaticamente.`}</p>
+        <p>{`El valor de referencia será el ${direction} de la imagen y la otra dimensión se ajustará automaticamente.`}</p>
       </div>
 
       <div className='text-xs text-gray-600 mt-2'>
@@ -411,14 +335,13 @@ const PixelActions = ({ imageIn, onProcessImage, onRestart, defaultBeadWidth, de
           className='p-2 bg-blue-700 rounded-xl text-white border border-blue-900 hover:bg-blue-800 disabled:bg-gray-700'
           disabled={
             !imageIn ||
-            !enabledAction ||
             (sizeMode !== 'exact' && (pixelCountReference === 0 || !Number.isFinite(pixelCountReference))) ||
             (sizeMode === 'exact' && (exactBeadWidth <= 0 || exactBeadHeight <= 0))
           }
         >
           Generar plantilla
         </button>
-        {!enabledAction ? <button onClick={onRestart} className='p-2 bg-amber-700 rounded-xl text-3xl text-white border border-amber-900 hover:bg-amber-800'><IoChevronBackCircle /></button> : null}
+        {hasResult ? <button onClick={onRestart} className='p-2 bg-amber-700 rounded-xl text-3xl text-white border border-amber-900 hover:bg-amber-800'><IoChevronBackCircle /></button> : null}
       </div>
     </div>
   );
