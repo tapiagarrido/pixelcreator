@@ -30,3 +30,14 @@ export const buildFilteredCanvas = async (src, filters = DEFAULT_FILTERS) => {
   ctx.drawImage(image, 0, 0);
   return canvas;
 };
+
+// Imagen como data URL (para guardarla en un proyecto), reducida a `maxSide` px como maximo.
+export const imageToDataUrl = async (src, maxSide = 1600) => {
+  const image = await loadImage(src);
+  const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(image.width * scale));
+  canvas.height = Math.max(1, Math.round(image.height * scale));
+  canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL('image/png');
+};

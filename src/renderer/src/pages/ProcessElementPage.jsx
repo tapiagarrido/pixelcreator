@@ -6,7 +6,9 @@ import { getCellIndexAt, renderBeadsOnly, renderPrintableSheet } from '../utils/
 import { setCell, withCells } from '../utils/templateEdit';
 import { buildShoppingListCsv } from '../utils/shoppingList';
 import { buildTemplatePdf } from '../utils/exportPdf';
-import { DEFAULT_FILTERS, buildFilteredCanvas } from '../utils/imageFilters';
+import { DEFAULT_FILTERS, buildFilteredCanvas, imageToDataUrl } from '../utils/imageFilters';
+import { serializeProject } from '../utils/project';
+import OpenProjectButton from '../components/OpenProjectButton';
 
 const FILTER_CONTROLS = [
   { key: 'brightness', label: 'Brillo', min: 0, max: 2, step: 0.1 },
@@ -39,18 +41,22 @@ const ProcessElementPage = () => {
   const location = useLocation();
   const navState = location.state || {};
 
-  // `image` es siempre la imagen original; la plantilla generada vive aparte en `processedImage`.
-  const [image, setImage] = useState(navState.imageSrc || null);
-  const [processedImage, setProcessedImage] = useState(null);
-  const [templateInfo, setTemplateInfo] = useState(null);
-  const [componentPixel, setComponentPixel] = useState(Boolean(navState.imageSrc));
-  const [filters, setFilters] = useState(DEFAULT_FILTERS);
-  const [showNumbers, setShowNumbers] = useState(false);
-  const [boardSize, setBoardSize] = useState(29);
+  const openedProject = navState.project || null;
+
+  // `image` es siempre la imagen original; la plantilla generada vive aparte en `templateInfo`.
+  const [image, setImage] = useState(openedProject?.image || navState.imageSrc || null);
+  const [templateInfo, setTemplateInfo] = useState(openedProject?.templateInfo || null);
+  const [componentPixel, setComponentPixel] = useState(Boolean(openedProject || navState.imageSrc));
+  const [filters, setFilters] = useState(openedProject?.filters || DEFAULT_FILTERS);
+  const [showNumbers, setShowNumbers] = useState(openedProject?.showNumbers || false);
+  const [boardSize, setBoardSize] = useState(openedProject?.boardSize || 29);
+  const [error, setError] = useState('');
   const [exportingPdf, setExportingPdf] = useState(false);
   // Edicion manual: herramienta activa, color del pincel e historial para deshacer/rehacer
   const [tool, setTool] = useState('none'); // 'none' | 'paint' | 'pick' | 'erase'
-  const [brushColor, setBrushColor] = useState(null);
+  const [brushColor, setBrushColor] = useState(
+    openedProject?.templateInfo?.paletteColors?.[0] || null
+  );
   const [history, setHistory] = useState({ undo: [], redo: [] });
 
   const canvasRef = useRef(null);
@@ -59,7 +65,6 @@ const ProcessElementPage = () => {
   if (!strokeRef.current) infoRef.current = templateInfo;
 
   const clearResult = () => {
-    setProcessedImage(null);
     setTemplateInfo(null);
     setTool('none');
     setHistory({ undo: [], redo: [] });
@@ -97,7 +102,7 @@ const ProcessElementPage = () => {
           return;
         }
 
-        if (processedImage && templateInfo) {
+        if (templateInfo) {
           const sheet = renderPrintableSheet(templateInfo, { showNumbers });
           canvas.width = sheet.width;
           canvas.height = sheet.height;
@@ -118,11 +123,11 @@ const ProcessElementPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [image, processedImage, templateInfo, showNumbers, filters]);
+  }, [image, templateInfo, showNumbers, filters]);
 
-  const handleProcessImage = (processedUrl, stats) => {
-    setProcessedImage(processedUrl);
+  const handleProcessImage = (_dataUrl, stats) => {
     setTemplateInfo(stats);
+    setError('');
     setHistory({ undo: [], redo: [] });
     setBrushColor(stats.paletteColors?.[0] || null);
   };
@@ -274,6 +279,45 @@ const ProcessElementPage = () => {
     setTimeout(() => URL.revokeObjectURL(url), 10000);
   };
 
+  // Guarda imagen, filtros y plantilla (con sus ediciones) en un archivo .json
+  const handleSaveProject = async () => {
+    if (!image) return;
+    try {
+      const project = serializeProject({
+        image: await imageToDataUrl(image),
+        filters,
+        templateInfo,
+        showNumbers,
+        boardSize
+      });
+      const blob = new Blob([JSON.stringify(project)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      const fecha = new Date();
+      link.download = `proyecto-${fecha.getDate()}-${fecha.getMonth() + 1}-${fecha.getHours()}${fecha.getMinutes()}.pixelcreator.json`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+      setError('');
+    } catch (saveError) {
+      console.error('No se pudo guardar el proyecto', saveError);
+      setError('No se pudo guardar el proyecto');
+    }
+  };
+
+  const handleOpenProject = (project) => {
+    setImage(project.image);
+    setFilters(project.filters);
+    setShowNumbers(project.showNumbers);
+    setBoardSize(project.boardSize);
+    setTemplateInfo(project.templateInfo);
+    setBrushColor(project.templateInfo?.paletteColors?.[0] || null);
+    setTool('none');
+    setHistory({ undo: [], redo: [] });
+    setComponentPixel(true);
+    setError('');
+  };
+
   const handleRestartComponent = () => {
     setImage(null);
     clearResult();
@@ -285,8 +329,32 @@ const ProcessElementPage = () => {
     <div className="w-full h-[calc(100vh-70px)] overflow-y-auto">
       <div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-8 px-4 pb-8">
         <div className="w-full lg:w-1/2 font-changa text-xl">
+          {error ? (
+            <div
+              role="alert"
+              className="mb-4 text-base text-red-700 bg-red-50 border border-red-200 rounded-lg p-3 flex justify-between gap-2"
+            >
+              <span>{error}</span>
+              <button onClick={() => setError('')} aria-label="Cerrar aviso">
+                ✕
+              </button>
+            </div>
+          ) : null}
           {componentPixel ? (
             <>
+              <div className="flex flex-wrap gap-2 mb-4 text-base">
+                <button
+                  onClick={handleSaveProject}
+                  className="px-3 py-1 bg-white border border-gray-400 rounded-xl hover:bg-gray-100"
+                >
+                  Guardar proyecto
+                </button>
+                <OpenProjectButton
+                  onOpen={handleOpenProject}
+                  onError={setError}
+                  className="px-3 py-1 bg-white border border-gray-400 rounded-xl hover:bg-gray-100"
+                />
+              </div>
               <details className="mb-4 border rounded-lg p-3 bg-gray-50/70">
                 <summary className="text-base font-semibold cursor-pointer select-none">
                   Filtros de imagen
@@ -302,12 +370,19 @@ const ProcessElementPage = () => {
                 onRestart={handleRestartComponent}
                 defaultBeadWidth={navState.beadWidth}
                 defaultBeadHeight={navState.beadHeight}
-                hasResult={Boolean(processedImage)}
+                hasResult={Boolean(templateInfo)}
               />
             </>
           ) : (
             <div>
-              <div>Cargue una imagen</div>
+              <div className="flex items-center justify-between gap-2">
+                <span>Cargue una imagen</span>
+                <OpenProjectButton
+                  onOpen={handleOpenProject}
+                  onError={setError}
+                  className="px-3 py-1 text-base bg-white border border-gray-400 rounded-xl hover:bg-gray-100"
+                />
+              </div>
 
               <div className="flex items-center justify-center">
                 <label
@@ -374,7 +449,7 @@ const ProcessElementPage = () => {
               onPointerCancel={handlePointerUp}
             />
           </div>
-          {processedImage ? (
+          {templateInfo ? (
             <>
               <div className="font-changa w-full flex flex-wrap justify-center items-center gap-3 mt-2 text-base">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
