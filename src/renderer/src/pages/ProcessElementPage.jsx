@@ -229,7 +229,10 @@ const ProcessElementPage = () => {
   // Hoja completa: coordenadas, cuadricula, leyenda con marca/paleta y conteo por color
   const handleDownloadSheet = () => {
     if (!templateInfo) return;
-    downloadDataUrl(renderPrintableSheet(templateInfo, { showNumbers }).toDataURL('image/png'), 'plantilla');
+    downloadDataUrl(
+      renderPrintableSheet(templateInfo, { showNumbers }).toDataURL('image/png'),
+      'plantilla'
+    );
   };
 
   // PDF A4: hoja completa + una pagina por tablero si la plantilla es mas grande que uno
@@ -254,7 +257,8 @@ const ProcessElementPage = () => {
 
   // Solo la imagen de beads, sin coordenadas ni leyenda
   const handleDownloadGridOnly = () => {
-    if (templateInfo) downloadDataUrl(renderBeadsOnly(templateInfo).toDataURL('image/png'), 'plantilla-solo-beads');
+    if (templateInfo)
+      downloadDataUrl(renderBeadsOnly(templateInfo).toDataURL('image/png'), 'plantilla-solo-beads');
   };
 
   // Lista de compra: beads necesarios por color
@@ -278,16 +282,16 @@ const ProcessElementPage = () => {
   };
 
   return (
-    <div className='w-full h-[calc(100vh-70px)] overflow-y-auto'>
-      <div className='flex flex-col lg:flex-row w-full gap-6 lg:gap-8 px-4 pb-8'>
-        <div className='w-full lg:w-1/2 font-changa text-xl'>
+    <div className="w-full h-[calc(100vh-70px)] overflow-y-auto">
+      <div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-8 px-4 pb-8">
+        <div className="w-full lg:w-1/2 font-changa text-xl">
           {componentPixel ? (
             <>
-              <details className='mb-4 border rounded-lg p-3 bg-gray-50/70'>
-                <summary className='text-base font-semibold cursor-pointer select-none'>
+              <details className="mb-4 border rounded-lg p-3 bg-gray-50/70">
+                <summary className="text-base font-semibold cursor-pointer select-none">
                   Filtros de imagen
                 </summary>
-                <div className='mt-3'>
+                <div className="mt-3">
                   <FilterControls filters={filters} onChange={handleFilterChange} />
                 </div>
               </details>
@@ -306,23 +310,50 @@ const ProcessElementPage = () => {
               <div>Cargue una imagen</div>
 
               <div className="flex items-center justify-center">
-                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-300  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <label
+                  htmlFor="dropzone-file"
+                  className="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-300  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                >
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                    <svg
+                      className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-500"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
                     </svg>
-                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-500"><span className="font-semibold">Click para buscar imagen</span></p>
+                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-500">
+                      <span className="font-semibold">Click para buscar imagen</span>
+                    </p>
                     <p className="text-xs text-gray-600 dark:text-gray-500">SVG, PNG, JPG o webp</p>
                   </div>
-                  <input id="dropzone-file" type="file" accept='image/*' onChange={handleImageSelected} className="hidden" />
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelected}
+                    className="hidden"
+                  />
                 </label>
               </div>
 
-              <div className='mt-8'>
+              <div className="mt-8">
                 <FilterControls filters={filters} onChange={handleFilterChange} />
               </div>
-              <div className='flex justify-end'>
-                <button className='flex mt-12 items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 p-2 rounded-xl border-blue-950 border disabled:bg-gray-700' onClick={() => setComponentPixel(true)} disabled={!image}>
+              <div className="flex justify-end">
+                <button
+                  className="flex mt-12 items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 p-2 rounded-xl border-blue-950 border disabled:bg-gray-700"
+                  onClick={() => setComponentPixel(true)}
+                  disabled={!image}
+                >
                   Siguiente
                   <GrCaretNext />
                 </button>
@@ -331,8 +362,8 @@ const ProcessElementPage = () => {
           )}
         </div>
 
-        <div className='w-full lg:w-1/2 relative'>
-          <div className='max-h-[70vh] overflow-auto border border-gray-200 rounded-xl bg-white/40 p-4'>
+        <div className="w-full lg:w-1/2 relative">
+          <div className="max-h-[70vh] overflow-auto border border-gray-200 rounded-xl bg-white/40 p-4">
             <canvas
               ref={canvasRef}
               className={`w-full block ${tool === 'none' ? '' : 'cursor-crosshair'}`}
@@ -345,43 +376,56 @@ const ProcessElementPage = () => {
           </div>
           {processedImage ? (
             <>
-              <div className='font-changa w-full flex flex-wrap justify-center items-center gap-3 mt-2 text-base'>
-                <label className='flex items-center gap-2 cursor-pointer select-none'>
+              <div className="font-changa w-full flex flex-wrap justify-center items-center gap-3 mt-2 text-base">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
-                    type='checkbox'
+                    type="checkbox"
                     checked={showNumbers}
                     onChange={(e) => setShowNumbers(e.target.checked)}
                   />
                   Números en las celdas
                 </label>
-                <button onClick={handleDownloadSheet} className='flex items-center gap-2 px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold'>
+                <button
+                  onClick={handleDownloadSheet}
+                  className="flex items-center gap-2 px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold"
+                >
                   <GrDownload /> Descargar plantilla
                 </button>
-                <label className='flex items-center gap-2'>
+                <label className="flex items-center gap-2">
                   Tablero
                   <input
-                    type='number'
+                    type="number"
                     min={1}
                     max={200}
                     value={boardSize}
                     onChange={(e) => setBoardSize(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                    className='w-16 border rounded-lg bg-white px-2 py-0.5 text-sm'
+                    className="w-16 border rounded-lg bg-white px-2 py-0.5 text-sm"
                   />
                 </label>
-                <button onClick={handleDownloadPdf} disabled={exportingPdf} className='px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold disabled:opacity-50'>
+                <button
+                  onClick={handleDownloadPdf}
+                  disabled={exportingPdf}
+                  className="px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold disabled:opacity-50"
+                >
                   {exportingPdf ? 'Generando…' : 'Descargar PDF'}
                 </button>
-                <button onClick={handleDownloadCsv} className='px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl'>
+                <button
+                  onClick={handleDownloadCsv}
+                  className="px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl"
+                >
                   Lista (CSV)
                 </button>
-                <button onClick={handleDownloadGridOnly} className='px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl'>
+                <button
+                  onClick={handleDownloadGridOnly}
+                  className="px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl"
+                >
                   Solo beads
                 </button>
               </div>
 
-              <div className='font-changa w-full mt-3 text-base border border-gray-200 rounded-xl bg-white/60 p-3'>
-                <div className='flex flex-wrap items-center gap-2'>
-                  <span className='font-semibold'>Editar:</span>
+              <div className="font-changa w-full mt-3 text-base border border-gray-200 rounded-xl bg-white/60 p-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-semibold">Editar:</span>
                   {[
                     ['paint', 'Pincel'],
                     ['pick', 'Pipeta'],
@@ -396,23 +440,37 @@ const ProcessElementPage = () => {
                       {label}
                     </button>
                   ))}
-                  <button onClick={handleUndo} disabled={history.undo.length === 0} className='px-3 py-1 rounded-xl border bg-white border-gray-400 disabled:opacity-40'>
+                  <button
+                    onClick={handleUndo}
+                    disabled={history.undo.length === 0}
+                    className="px-3 py-1 rounded-xl border bg-white border-gray-400 disabled:opacity-40"
+                  >
                     Deshacer
                   </button>
-                  <button onClick={handleRedo} disabled={history.redo.length === 0} className='px-3 py-1 rounded-xl border bg-white border-gray-400 disabled:opacity-40'>
+                  <button
+                    onClick={handleRedo}
+                    disabled={history.redo.length === 0}
+                    className="px-3 py-1 rounded-xl border bg-white border-gray-400 disabled:opacity-40"
+                  >
                     Rehacer
                   </button>
                 </div>
 
                 {tool !== 'none' ? (
-                  <div className='mt-2'>
-                    <div className='text-sm text-gray-600 mb-1'>
-                      {tool === 'paint' ? `Color del pincel: ${brushColor ? `${brushColor.code ? `${brushColor.code} · ` : ''}${brushColor.name}` : '-'}` : null}
-                      {tool === 'pick' ? 'Haz clic en una celda para copiar su color al pincel.' : null}
-                      {tool === 'erase' ? 'Haz clic o arrastra sobre las celdas para vaciarlas.' : null}
+                  <div className="mt-2">
+                    <div className="text-sm text-gray-600 mb-1">
+                      {tool === 'paint'
+                        ? `Color del pincel: ${brushColor ? `${brushColor.code ? `${brushColor.code} · ` : ''}${brushColor.name}` : '-'}`
+                        : null}
+                      {tool === 'pick'
+                        ? 'Haz clic en una celda para copiar su color al pincel.'
+                        : null}
+                      {tool === 'erase'
+                        ? 'Haz clic o arrastra sobre las celdas para vaciarlas.'
+                        : null}
                     </div>
                     {tool === 'paint' ? (
-                      <div className='flex flex-wrap gap-1 max-h-24 overflow-y-auto p-1'>
+                      <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto p-1">
                         {(templateInfo?.paletteColors || []).map((color) => (
                           <button
                             key={color.id}
@@ -431,10 +489,12 @@ const ProcessElementPage = () => {
               </div>
 
               {templateInfo ? (
-                <div className='font-changa bg-white/70 rounded-xl border border-gray-200 p-4 mt-4 mx-8 max-h-52 overflow-y-auto'>
-                  <div className='font-bold text-lg mb-2'>Resumen de plantilla</div>
-                  <div className='text-sm'>
-                    <div>Tamaño: {templateInfo.widthBeads} x {templateInfo.heightBeads} beads</div>
+                <div className="font-changa bg-white/70 rounded-xl border border-gray-200 p-4 mt-4 mx-8 max-h-52 overflow-y-auto">
+                  <div className="font-bold text-lg mb-2">Resumen de plantilla</div>
+                  <div className="text-sm">
+                    <div>
+                      Tamaño: {templateInfo.widthBeads} x {templateInfo.heightBeads} beads
+                    </div>
                     <div>Total estimado: {templateInfo.totalBeads} beads</div>
                     {templateInfo.emptyCells > 0 ? (
                       <div>Celdas vacías (transparentes): {templateInfo.emptyCells}</div>
@@ -442,18 +502,21 @@ const ProcessElementPage = () => {
                     <div>Paleta: {templateInfo.paletteName}</div>
                   </div>
 
-                  <div className='mt-3 text-sm font-semibold'>Conteo por color</div>
-                  <div className='mt-1 space-y-1'>
+                  <div className="mt-3 text-sm font-semibold">Conteo por color</div>
+                  <div className="mt-1 space-y-1">
                     {templateInfo.colorUsage.map((color) => (
-                      <div key={color.id} className='flex items-center justify-between text-sm bg-gray-50 rounded-lg px-2 py-1'>
-                        <div className='flex items-center gap-2'>
+                      <div
+                        key={color.id}
+                        className="flex items-center justify-between text-sm bg-gray-50 rounded-lg px-2 py-1"
+                      >
+                        <div className="flex items-center gap-2">
                           <span
-                            className='inline-block w-4 h-4 rounded border border-black/20'
+                            className="inline-block w-4 h-4 rounded border border-black/20"
                             style={{ backgroundColor: color.hex }}
                           />
                           <span>{color.code ? `${color.code} · ${color.name}` : color.name}</span>
                         </div>
-                        <span className='font-semibold'>{color.count}</span>
+                        <span className="font-semibold">{color.count}</span>
                       </div>
                     ))}
                   </div>

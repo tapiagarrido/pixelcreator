@@ -10,4 +10,4 @@ module.exports = {
     '@electron-toolkit',
     '@electron-toolkit/eslint-config-prettier'
   ]
-}
+};

@@ -16,23 +16,33 @@ const ColorPicker = ({ colors, ownedIds, onChange }) => {
 
   return (
     <div>
-      <div className='flex flex-wrap items-center gap-2 text-sm mb-2'>
-        <span className='font-semibold'>{selectedCount} de {colors.length} colores</span>
-        <button type='button' className='px-2 border rounded-lg bg-white hover:bg-gray-100' onClick={() => onChange(colors.map((c) => c.id))}>
+      <div className="flex flex-wrap items-center gap-2 text-sm mb-2">
+        <span className="font-semibold">
+          {selectedCount} de {colors.length} colores
+        </span>
+        <button
+          type="button"
+          className="px-2 border rounded-lg bg-white hover:bg-gray-100"
+          onClick={() => onChange(colors.map((c) => c.id))}
+        >
           Todos
         </button>
-        <button type='button' className='px-2 border rounded-lg bg-white hover:bg-gray-100' onClick={() => onChange([])}>
+        <button
+          type="button"
+          className="px-2 border rounded-lg bg-white hover:bg-gray-100"
+          onClick={() => onChange([])}
+        >
           Ninguno
         </button>
       </div>
 
-      <div className='flex flex-wrap gap-1 max-h-48 overflow-y-auto p-1'>
+      <div className="flex flex-wrap gap-1 max-h-48 overflow-y-auto p-1">
         {colors.map((color) => {
           const isOn = selected.has(color.id);
           return (
             <button
               key={color.id}
-              type='button'
+              type="button"
               title={`${color.code} · ${color.name}`}
               aria-label={`${color.code} ${color.name}`}
               aria-pressed={isOn}

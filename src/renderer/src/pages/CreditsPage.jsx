@@ -11,10 +11,13 @@ const CreditsPage = () => {
           Bienvenidos
         </Typography>
         <Typography variant="body1" color="text.secondary" gutterBottom>
-          Esta es una versión temprana de la aplicación, por lo que podría presentar algunos errores. Si observas algún mal funcionamiento o tienes ideas para mejorarla, por favor envía un correo a <strong>gustavogarrido.programador@gmail.com</strong>.
+          Esta es una versión temprana de la aplicación, por lo que podría presentar algunos
+          errores. Si observas algún mal funcionamiento o tienes ideas para mejorarla, por favor
+          envía un correo a <strong>gustavogarrido.programador@gmail.com</strong>.
         </Typography>
         <Typography variant="body1" color="text.secondary" gutterBottom>
-          Mi idea es seguir mejorando la aplicación para contribuir al arte del píxel, del cual también soy un fanático.
+          Mi idea es seguir mejorando la aplicación para contribuir al arte del píxel, del cual
+          también soy un fanático.
         </Typography>
         <Typography variant="body1" color="text.secondary" gutterBottom>
           La aplicación será de código abierto y gratuita para todo el público.

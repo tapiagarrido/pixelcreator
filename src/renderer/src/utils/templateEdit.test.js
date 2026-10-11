@@ -11,7 +11,10 @@ describe('templateEdit', () => {
     const stats = buildTemplateStats([red, blue, blue, null]);
     expect(stats.totalBeads).toBe(3);
     expect(stats.emptyCells).toBe(1);
-    expect(stats.colorUsage.map((c) => [c.id, c.count])).toEqual([['b', 2], ['r', 1]]);
+    expect(stats.colorUsage.map((c) => [c.id, c.count])).toEqual([
+      ['b', 2],
+      ['r', 1]
+    ]);
   });
 
   it('setCell no muta y devuelve el mismo arreglo si no cambia nada', () => {

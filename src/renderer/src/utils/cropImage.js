@@ -1,5 +1,4 @@
 export const getCroppedImg = (imageSrc, crop) => {
-
   const createImage = (url) =>
     new Promise((resolve, reject) => {
       const image = new Image();
@@ -8,7 +7,6 @@ export const getCroppedImg = (imageSrc, crop) => {
       image.setAttribute('crossOrigin', 'anonymous');
       image.src = url;
     });
-
 
   const getCroppedImage = async (imageSrc, crop) => {
     const image = await createImage(imageSrc);
@@ -21,11 +19,7 @@ export const getCroppedImg = (imageSrc, crop) => {
     canvas.width = safeArea;
     canvas.height = safeArea;
 
-    ctx.drawImage(
-      image,
-      safeArea / 2 - image.width * 0.5,
-      safeArea / 2 - image.height * 0.5
-    );
+    ctx.drawImage(image, safeArea / 2 - image.width * 0.5, safeArea / 2 - image.height * 0.5);
 
     const data = ctx.getImageData(0, 0, safeArea, safeArea);
 

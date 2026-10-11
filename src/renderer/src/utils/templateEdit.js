@@ -10,7 +10,14 @@ export const buildTemplateStats = (cells) => {
     }
     const entry = counter.get(color.id);
     if (entry) entry.count += 1;
-    else counter.set(color.id, { id: color.id, code: color.code, name: color.name, hex: color.hex, count: 1 });
+    else
+      counter.set(color.id, {
+        id: color.id,
+        code: color.code,
+        name: color.name,
+        hex: color.hex,
+        count: 1
+      });
   });
 
   const colorUsage = [...counter.values()].sort((a, b) => b.count - a.count);

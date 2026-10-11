@@ -39,7 +39,12 @@ describe('computeCellGrid', () => {
   });
 
   it('deja vacias las celdas totalmente transparentes', () => {
-    const data = makeData([px(10, 10, 10, 0), px(20, 20, 20, 0), px(200, 0, 0, 255), px(200, 0, 0, 255)]);
+    const data = makeData([
+      px(10, 10, 10, 0),
+      px(20, 20, 20, 0),
+      px(200, 0, 0, 255),
+      px(200, 0, 0, 255)
+    ]);
     const grid = computeCellGrid(data, 4, 1, 2, 1);
     expect(grid[0]).toBeNull();
     expect(grid[1]).toEqual({ r: 200, g: 0, b: 0 });

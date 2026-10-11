@@ -29,7 +29,11 @@ describe('paletas integradas', () => {
   it('findClosestPaletteColor devuelve el color exacto de la paleta', () => {
     const perler = getPalettesByBrand('perler')[0];
     const target = perler.colors[10];
-    const rgb = { r: parseInt(target.hex.slice(1, 3), 16), g: parseInt(target.hex.slice(3, 5), 16), b: parseInt(target.hex.slice(5, 7), 16) };
+    const rgb = {
+      r: parseInt(target.hex.slice(1, 3), 16),
+      g: parseInt(target.hex.slice(3, 5), 16),
+      b: parseInt(target.hex.slice(5, 7), 16)
+    };
     expect(findClosestPaletteColor(rgb, perler.colors).id).toBe(target.id);
   });
 

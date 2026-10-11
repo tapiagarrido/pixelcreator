@@ -141,7 +141,13 @@ const ditherGrid = (grid, cellsW, cellsH, prepared) => {
  * - maxColors > 0: se queda con los N colores de la paleta mas usados y re-mapea todo a ellos.
  * - dither: difunde el error de cuantizacion (Floyd-Steinberg) para simular tonos intermedios.
  */
-export const quantizeGrid = (grid, cellsW, cellsH, colors, { maxColors = 0, dither = false } = {}) => {
+export const quantizeGrid = (
+  grid,
+  cellsW,
+  cellsH,
+  colors,
+  { maxColors = 0, dither = false } = {}
+) => {
   let prepared = preparePalette(colors);
   if (prepared.length === 0) return grid.map(() => null);
 

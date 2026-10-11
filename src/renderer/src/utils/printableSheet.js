@@ -124,7 +124,10 @@ const textColorFor = (hex) => {
  * celdas de color (vacias en blanco) y una leyenda numerada con cantidad por color.
  * `info` es el resumen que entrega `buildBeadTemplate` mas el nombre de marca/paleta.
  */
-export const renderPrintableSheet = (info, { showNumbers = false, title = 'Plantilla de beads' } = {}) => {
+export const renderPrintableSheet = (
+  info,
+  { showNumbers = false, title = 'Plantilla de beads' } = {}
+) => {
   const { cells, widthBeads: cols, heightBeads: rows, colorUsage } = info;
   const colOffset = info.colOffset || 0;
   const rowOffset = info.rowOffset || 0;
@@ -164,10 +167,18 @@ export const renderPrintableSheet = (info, { showNumbers = false, title = 'Plant
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   for (let x = 0; x < cols; x++) {
-    ctx.fillText(String(colOffset + x + 1), L.gridX + x * L.cell + L.cell / 2, L.gridY - L.gutter / 2);
+    ctx.fillText(
+      String(colOffset + x + 1),
+      L.gridX + x * L.cell + L.cell / 2,
+      L.gridY - L.gutter / 2
+    );
   }
   for (let y = 0; y < rows; y++) {
-    ctx.fillText(String(rowOffset + y + 1), L.gridX - L.gutter / 2, L.gridY + y * L.cell + L.cell / 2);
+    ctx.fillText(
+      String(rowOffset + y + 1),
+      L.gridX - L.gutter / 2,
+      L.gridY + y * L.cell + L.cell / 2
+    );
   }
 
   // Celdas
@@ -231,7 +242,11 @@ export const renderPrintableSheet = (info, { showNumbers = false, title = 'Plant
     ctx.textAlign = 'left';
     ctx.font = `17px ${FONT}`;
     ctx.fillStyle = '#111111';
-    ctx.fillText(color.code ? `${color.code}  ${color.name}` : color.name, L.legendX + box + 10, y + LEGEND_ROW_H / 2 + 1);
+    ctx.fillText(
+      color.code ? `${color.code}  ${color.name}` : color.name,
+      L.legendX + box + 10,
+      y + LEGEND_ROW_H / 2 + 1
+    );
 
     ctx.textAlign = 'right';
     ctx.fillText(String(color.count), L.legendX + LEGEND_W, y + LEGEND_ROW_H / 2 + 1);
