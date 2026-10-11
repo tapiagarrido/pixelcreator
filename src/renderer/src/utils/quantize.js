@@ -1,5 +1,10 @@
 import { hexToRgb } from './hamaPalette';
 
+// Cantidad de celdas del eje libre cuando el otro eje tiene `count` celdas.
+// El epsilon evita que errores de coma flotante (58.00000000001) sumen una celda de mas.
+export const cellsForAxis = (freeSize, referenceSize, count) =>
+  Math.max(1, Math.ceil((freeSize * count) / referenceSize - 1e-6));
+
 const MIN_COVERAGE = 0.5; // una celda con menos de 50% de pixeles opacos queda vacia
 const ALPHA_THRESHOLD = 12;
 

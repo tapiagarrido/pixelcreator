@@ -3,6 +3,7 @@ import { GrCaretNext, GrDownload } from 'react-icons/gr';
 import { useLocation } from 'react-router-dom';
 import PixelActions from '../components/process/PixelActions';
 import { renderPrintableSheet } from '../utils/printableSheet';
+import { buildTemplatePdf } from '../utils/exportPdf';
 import { DEFAULT_FILTERS, buildFilteredCanvas } from '../utils/imageFilters';
 
 const FILTER_CONTROLS = [
@@ -43,6 +44,8 @@ const ProcessElementPage = () => {
   const [componentPixel, setComponentPixel] = useState(Boolean(navState.imageSrc));
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [showNumbers, setShowNumbers] = useState(false);
+  const [boardSize, setBoardSize] = useState(29);
+  const [exportingPdf, setExportingPdf] = useState(false);
 
   const canvasRef = useRef(null);
 
@@ -123,6 +126,26 @@ const ProcessElementPage = () => {
   const handleDownloadSheet = () => {
     if (!templateInfo) return;
     downloadDataUrl(renderPrintableSheet(templateInfo, { showNumbers }).toDataURL('image/png'), 'plantilla');
+  };
+
+  // PDF A4: hoja completa + una pagina por tablero si la plantilla es mas grande que uno
+  const handleDownloadPdf = async () => {
+    if (!templateInfo) return;
+    setExportingPdf(true);
+    try {
+      const blob = await buildTemplatePdf(templateInfo, { showNumbers, boardSize });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      const fecha = new Date();
+      link.download = `plantilla-${fecha.getDate()}-${fecha.getMonth() + 1}-${fecha.getHours()}${fecha.getMinutes()}.pdf`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (error) {
+      console.error('No se pudo generar el PDF', error);
+    } finally {
+      setExportingPdf(false);
+    }
   };
 
   // Solo la imagen de beads, sin coordenadas ni leyenda
@@ -208,6 +231,20 @@ const ProcessElementPage = () => {
                 </label>
                 <button onClick={handleDownloadSheet} className='flex items-center gap-2 px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold'>
                   <GrDownload /> Descargar plantilla
+                </button>
+                <label className='flex items-center gap-2'>
+                  Tablero
+                  <input
+                    type='number'
+                    min={1}
+                    max={200}
+                    value={boardSize}
+                    onChange={(e) => setBoardSize(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                    className='w-16 border rounded-lg bg-white px-2 py-0.5 text-sm'
+                  />
+                </label>
+                <button onClick={handleDownloadPdf} disabled={exportingPdf} className='px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold disabled:opacity-50'>
+                  {exportingPdf ? 'Generando…' : 'Descargar PDF'}
                 </button>
                 <button onClick={handleDownloadGridOnly} className='px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl'>
                   Solo beads

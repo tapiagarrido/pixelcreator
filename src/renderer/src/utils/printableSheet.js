@@ -14,6 +14,60 @@ export const getSheetCellSize = (cols, rows) =>
 export const getLegendIndex = (colorUsage) =>
   new Map(colorUsage.map((color, index) => [color.id, index + 1]));
 
+// Divide una grilla en tableros de boardSize x boardSize (los de los bordes pueden ser menores).
+export const getBoardRegions = (cols, rows, boardSize) => {
+  const regions = [];
+  for (let row0 = 0; row0 < rows; row0 += boardSize) {
+    for (let col0 = 0; col0 < cols; col0 += boardSize) {
+      regions.push({
+        col0,
+        col1: Math.min(cols, col0 + boardSize),
+        row0,
+        row1: Math.min(rows, row0 + boardSize)
+      });
+    }
+  }
+  return regions;
+};
+
+/**
+ * Recorta `info` a una region. La leyenda conserva la numeracion global
+ * (para que el numero de cada color sea el mismo en todas las paginas)
+ * pero con las cantidades de esa region.
+ */
+export const buildRegionInfo = (info, region) => {
+  const { col0, col1, row0, row1 } = region;
+  const cols = col1 - col0;
+  const rows = row1 - row0;
+  const indexById = getLegendIndex(info.colorUsage);
+  const cells = [];
+  const counts = new Map();
+
+  for (let y = row0; y < row1; y++) {
+    for (let x = col0; x < col1; x++) {
+      const color = info.cells[y * info.widthBeads + x];
+      cells.push(color);
+      if (color) counts.set(color.id, (counts.get(color.id) || 0) + 1);
+    }
+  }
+
+  const colorUsage = info.colorUsage
+    .filter((color) => counts.has(color.id))
+    .map((color) => ({ ...color, count: counts.get(color.id) }));
+
+  return {
+    ...info,
+    cells,
+    widthBeads: cols,
+    heightBeads: rows,
+    colorUsage,
+    totalBeads: colorUsage.reduce((sum, color) => sum + color.count, 0),
+    colOffset: col0,
+    rowOffset: row0,
+    legendIndex: indexById
+  };
+};
+
 export const computeSheetLayout = (cols, rows, legendCount) => {
   const cell = getSheetCellSize(cols, rows);
   const gutter = cell;
@@ -38,9 +92,12 @@ const textColorFor = (hex) => {
  * celdas de color (vacias en blanco) y una leyenda numerada con cantidad por color.
  * `info` es el resumen que entrega `buildBeadTemplate` mas el nombre de marca/paleta.
  */
-export const renderPrintableSheet = (info, { showNumbers = false } = {}) => {
+export const renderPrintableSheet = (info, { showNumbers = false, title = 'Plantilla de beads' } = {}) => {
   const { cells, widthBeads: cols, heightBeads: rows, colorUsage } = info;
-  const indexById = getLegendIndex(colorUsage);
+  const colOffset = info.colOffset || 0;
+  const rowOffset = info.rowOffset || 0;
+  // En una region la numeracion viene de la plantilla completa
+  const indexById = info.legendIndex || getLegendIndex(colorUsage);
   const L = computeSheetLayout(cols, rows, colorUsage.length);
 
   const canvas = document.createElement('canvas');
@@ -56,7 +113,7 @@ export const renderPrintableSheet = (info, { showNumbers = false } = {}) => {
   ctx.textBaseline = 'top';
   ctx.textAlign = 'left';
   ctx.font = `bold 30px ${FONT}`;
-  ctx.fillText('Plantilla de beads', PAD, PAD);
+  ctx.fillText(title, PAD, PAD);
   ctx.font = `20px ${FONT}`;
   ctx.fillText(
     `Beads: ${info.brandLabel || info.brand || '-'} · Paleta: ${info.paletteName}`,
@@ -75,10 +132,10 @@ export const renderPrintableSheet = (info, { showNumbers = false } = {}) => {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   for (let x = 0; x < cols; x++) {
-    ctx.fillText(String(x + 1), L.gridX + x * L.cell + L.cell / 2, L.gridY - L.gutter / 2);
+    ctx.fillText(String(colOffset + x + 1), L.gridX + x * L.cell + L.cell / 2, L.gridY - L.gutter / 2);
   }
   for (let y = 0; y < rows; y++) {
-    ctx.fillText(String(y + 1), L.gridX - L.gutter / 2, L.gridY + y * L.cell + L.cell / 2);
+    ctx.fillText(String(rowOffset + y + 1), L.gridX - L.gutter / 2, L.gridY + y * L.cell + L.cell / 2);
   }
 
   // Celdas
@@ -137,7 +194,7 @@ export const renderPrintableSheet = (info, { showNumbers = false } = {}) => {
     ctx.textAlign = 'center';
     ctx.font = `bold 16px ${FONT}`;
     ctx.fillStyle = textColorFor(color.hex);
-    ctx.fillText(String(i + 1), L.legendX + box / 2, y + LEGEND_ROW_H / 2 + 1);
+    ctx.fillText(String(indexById.get(color.id)), L.legendX + box / 2, y + LEGEND_ROW_H / 2 + 1);
 
     ctx.textAlign = 'left';
     ctx.font = `17px ${FONT}`;

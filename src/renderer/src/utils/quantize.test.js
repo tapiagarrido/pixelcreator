@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { computeCellGrid, quantizeGrid, rgbToLab } from './quantize';
+import { cellsForAxis, computeCellGrid, quantizeGrid, rgbToLab } from './quantize';
 
 const palette = [
   { id: 'black', name: 'Negro', hex: '#000000' },
@@ -100,5 +100,17 @@ describe('quantizeGrid', () => {
 
   it('devuelve celdas vacias si la paleta esta vacia', () => {
     expect(quantizeGrid([{ r: 1, g: 2, b: 3 }], 1, 1, [])).toEqual([null]);
+  });
+});
+
+describe('cellsForAxis', () => {
+  it('no suma una celda por error de coma flotante', () => {
+    expect(cellsForAxis(400, 400, 58)).toBe(58);
+    expect(cellsForAxis(300, 300, 29)).toBe(29);
+  });
+
+  it('redondea hacia arriba cuando la proporcion no es exacta', () => {
+    expect(cellsForAxis(300, 200, 10)).toBe(15);
+    expect(cellsForAxis(301, 200, 10)).toBe(16);
   });
 });

@@ -8,7 +8,7 @@ import {
   getPaletteById,
   getPalettesByBrand
 } from '../../utils/hamaPalette';
-import { buildBeadTemplate } from '../../utils/quantize';
+import { buildBeadTemplate, cellsForAxis } from '../../utils/quantize';
 import {
   applySelection,
   getActiveColors,
@@ -132,10 +132,10 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
 
         if (direction.includes('ancho')) {
           numCellsWidth = numberCells;
-          numCellsHeight = Math.ceil(sourceCanvas.height / (sourceCanvas.width / numberCells));
+          numCellsHeight = cellsForAxis(sourceCanvas.height, sourceCanvas.width, numberCells);
         } else {
           numCellsHeight = numberCells;
-          numCellsWidth = Math.ceil(sourceCanvas.width / (sourceCanvas.height / numberCells));
+          numCellsWidth = cellsForAxis(sourceCanvas.width, sourceCanvas.height, numberCells);
         }
       }
 
