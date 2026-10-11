@@ -9,6 +9,14 @@ import {
   getPalettesByBrand
 } from '../../utils/hamaPalette';
 import { buildBeadTemplate } from '../../utils/quantize';
+import {
+  applySelection,
+  getActiveColors,
+  getAvailableColors,
+  loadOwnedColors,
+  saveOwnedColors
+} from '../../utils/ownedColors';
+import ColorPicker from './ColorPicker';
 
 
 const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, defaultBeadWidth, defaultBeadHeight, hasResult }) => {
@@ -29,14 +37,27 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
   const [maxColors, setMaxColors] = useState(0);
   const [dither, setDither] = useState(false);
   const [includeSpecial, setIncludeSpecial] = useState(false);
+  const [ownedMap, setOwnedMap] = useState(loadOwnedColors);
   const borderWidth = 0.8;
   const selectedBuiltinPalette = getPaletteById(selectedPaletteId);
   const basePalette = customPalette || selectedBuiltinPalette || defaultPalette;
   const specialCount = basePalette.colors.filter((color) => color.special).length;
   // Por defecto se excluyen los beads translucidos, glow, glitter, etc.
-  const activePalette = includeSpecial || specialCount === 0
-    ? basePalette
-    : { ...basePalette, colors: basePalette.colors.filter((color) => !color.special) };
+  // ownedIds === null significa que el usuario tiene todos los colores.
+  const ownedIds = ownedMap[basePalette.id] ?? null;
+  const availableColors = getAvailableColors(basePalette.colors, includeSpecial);
+  const activePalette = {
+    ...basePalette,
+    colors: getActiveColors(basePalette.colors, { includeSpecial, ownedIds })
+  };
+  const handleOwnedChange = (selectedIds) => {
+    const next = {
+      ...ownedMap,
+      [basePalette.id]: applySelection(basePalette.colors, includeSpecial, ownedIds, selectedIds)
+    };
+    setOwnedMap(next);
+    saveOwnedColors(next);
+  };
   const brandPalettes = getPalettesByBrand(selectedBrand);
   const boardOptions = [
     { label: '1 tablero (29 beads de ancho)', value: '29' },
@@ -306,6 +327,16 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
         </label>
       ) : null}
 
+      <details className='mb-4 border rounded-lg p-3 bg-gray-50/70'>
+        <summary className='text-base font-semibold cursor-pointer select-none'>
+          Mis colores ({activePalette.colors.length} disponibles)
+        </summary>
+        <p className='text-xs text-gray-600 mt-2 mb-2'>
+          Marca solo los beads que tienes: la plantilla usará únicamente esos colores. Se recuerda por paleta.
+        </p>
+        <ColorPicker colors={availableColors} ownedIds={ownedIds} onChange={handleOwnedChange} />
+      </details>
+
       <div className='flex gap-4 items-baseline mb-4'>
         <div className='w-1/3'>Máx. colores:</div>
         <input
@@ -336,6 +367,12 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
         Paleta activa: {activePalette.name} - {activePalette.colors.length} colores
       </div>
 
+      {activePalette.colors.length === 0 ? (
+        <div className='text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg p-2 mt-2'>
+          No hay colores seleccionados. Marca al menos uno en «Mis colores».
+        </div>
+      ) : null}
+
       {!imageIn ? (
         <div className='text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg p-2 mt-2'>
           No hay imagen cargada. Vuelve al paso anterior y selecciona o recorta una imagen.
@@ -348,6 +385,7 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
           className='p-2 bg-blue-700 rounded-xl text-white border border-blue-900 hover:bg-blue-800 disabled:bg-gray-700'
           disabled={
             !imageIn ||
+            activePalette.colors.length === 0 ||
             (sizeMode !== 'exact' && (pixelCountReference === 0 || !Number.isFinite(pixelCountReference))) ||
             (sizeMode === 'exact' && (exactBeadWidth <= 0 || exactBeadHeight <= 0))
           }
