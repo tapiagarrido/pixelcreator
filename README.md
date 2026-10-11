@@ -50,3 +50,12 @@ snapcraft upload --release=edge dist/pixelcreator_1.0.0_amd64.snap
 Conviene probarlo primero en el canal `edge` y pasarlo a `stable` cuando esté verificado
 (`snapcraft release pixelcreator <revisión> stable`). Cada subida necesita una versión nueva
 en `package.json`.
+
+## Licencia
+
+[MIT](LICENSE) © Gustavo Adolfo Garrido Tapia. Puedes usar, modificar y redistribuir este
+programa libremente, incluso con fines comerciales, conservando el aviso de copyright.
+
+Los datos de color de los fabricantes (`src/renderer/src/data/beadPalettes.json`) provienen de
+[maxcleme/beadcolors](https://github.com/maxcleme/beadcolors), también bajo licencia MIT
+(Copyright (c) 2020 maxcleme).

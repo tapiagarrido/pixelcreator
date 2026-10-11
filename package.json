@@ -8,6 +8,7 @@
     "name": "Gustavo Adolfo Garrido Tapia",
     "email": "gustavogarrido.programador@gmail.com"
   },
+  "license": "MIT",
   "homepage": "https://gustavo-dev.netlify.app/",
   "scripts": {
     "format": "prettier --write .",
