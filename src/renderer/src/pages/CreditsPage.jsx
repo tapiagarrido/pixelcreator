@@ -1,6 +1,6 @@
 const CreditsPage = () => {
   return (
-    <div className="max-w-3xl mx-auto my-5 p-6 bg-white rounded-xl shadow border border-gray-200">
+    <div className="max-w-3xl mx-auto my-5 p-6 bg-white rounded-xl shadow-sm border border-gray-200">
       <h1 className="text-2xl mb-2">Bienvenidos</h1>
       <div className="space-y-2 text-gray-600">
         <p>

@@ -48,7 +48,7 @@ const ColorPicker = ({ colors, ownedIds, onChange }) => {
               aria-pressed={isOn}
               onClick={() => toggle(color.id)}
               style={{ backgroundColor: color.hex }}
-              className={`w-7 h-7 rounded border ${
+              className={`w-7 h-7 rounded-sm border ${
                 isOn ? 'border-black ring-2 ring-blue-500' : 'border-black/20 opacity-25'
               }`}
             />

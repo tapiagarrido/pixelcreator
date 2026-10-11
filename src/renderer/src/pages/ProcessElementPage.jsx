@@ -512,7 +512,7 @@ const ProcessElementPage = () => {
                             aria-pressed={brushColor?.id === color.id}
                             onClick={() => setBrushColor(color)}
                             style={{ backgroundColor: color.hex }}
-                            className={`w-6 h-6 rounded border ${brushColor?.id === color.id ? 'border-black ring-2 ring-blue-500' : 'border-black/20'}`}
+                            className={`w-6 h-6 rounded-sm border ${brushColor?.id === color.id ? 'border-black ring-2 ring-blue-500' : 'border-black/20'}`}
                           />
                         ))}
                       </div>
@@ -544,7 +544,7 @@ const ProcessElementPage = () => {
                       >
                         <div className="flex items-center gap-2">
                           <span
-                            className="inline-block w-4 h-4 rounded border border-black/20"
+                            className="inline-block w-4 h-4 rounded-sm border border-black/20"
                             style={{ backgroundColor: color.hex }}
                           />
                           <span>{color.code ? `${color.code} · ${color.name}` : color.name}</span>

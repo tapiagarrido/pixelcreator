@@ -1,6 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Tailwind 4 cambió dos valores por defecto; se conservan los de Tailwind 3 para no alterar la interfaz */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
 
 /* En un archivo CSS, por ejemplo, fonts.css */
 /* En un archivo CSS, por ejemplo, fonts.css */
