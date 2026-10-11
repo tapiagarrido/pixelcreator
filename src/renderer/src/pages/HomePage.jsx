@@ -2,9 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import OpenProjectButton from '../components/OpenProjectButton';
 import { useWorkspace } from '../context/WorkspaceContext';
 import pixelimage from '../../../../public/images/pixel_bg.png';
-import LoadingAnimation from '../../../../public/animations/loading.json';
 import { useState, useEffect } from 'react';
-import Lottie from 'lottie-react';
 
 const HomePage = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -24,7 +22,11 @@ const HomePage = () => {
     <div className="flex flex-col justify-center items-center space-y-12">
       {!imageLoaded ? (
         <div className="flex flex-col justify-center items-center">
-          <Lottie animationData={LoadingAnimation} style={{ width: 200, height: 200 }} />
+          <div
+            role="status"
+            aria-label="Cargando"
+            className="w-16 h-16 border-4 border-gray-300 border-t-yellow-600 rounded-full animate-spin"
+          />
         </div>
       ) : (
         <>

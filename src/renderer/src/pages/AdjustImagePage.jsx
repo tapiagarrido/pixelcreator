@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
-import Slider from '@mui/material/Slider';
 import { useNavigate } from 'react-router-dom';
 import { getCroppedImg } from '../utils/cropImage';
 import ImageDropzone from '../components/ImageDropzone';
@@ -212,13 +211,15 @@ const AdjustImagePage = () => {
           </div>
           <div className="mt-2">
             <div className="text-xs text-gray-500 mb-1 text-center">Zoom</div>
-            <Slider
+            <input
+              type="range"
               value={zoom}
               min={1}
               max={3}
               step={0.1}
-              aria-labelledby="Zoom"
-              onChange={(_e, z) => setZoom(z)}
+              aria-label="Zoom"
+              className="w-full"
+              onChange={(event) => setZoom(Number(event.target.value))}
             />
           </div>
           <div className="flex justify-between items-center mt-4">
