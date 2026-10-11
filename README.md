@@ -22,7 +22,8 @@ npm run dev
 ```bash
 npm run build:win     # Windows (nsis)
 npm run build:mac     # macOS (dmg)
-npm run build:linux   # Linux (AppImage, deb)
+npm run build:linux   # Linux (AppImage, deb, snap)
+npm run build:snap    # solo el snap
 ```
 
 La configuración de empaquetado está en `electron-builder.yml`.
@@ -32,3 +33,20 @@ La configuración de empaquetado está en `electron-builder.yml`.
 Los colores de Hama, Perler, Nabbi y Artkal (códigos, nombres y RGB medido sobre beads reales)
 vienen de [maxcleme/beadcolors](https://github.com/maxcleme/beadcolors) (licencia MIT). Para
 regenerarlos: `node scripts/gen-palettes.mjs`.
+
+## Publicar en la Snap Store
+
+El snap se genera con electron-builder (`snap` en `electron-builder.yml`, base `core22`, confinamiento
+estricto). Para subirlo hay que usar tu cuenta de Ubuntu One:
+
+```bash
+sudo snap install snapcraft --classic
+snapcraft login
+snapcraft register pixelcreator          # reserva el nombre (una sola vez)
+npm run build:snap                       # genera dist/pixelcreator_<versión>_amd64.snap
+snapcraft upload --release=edge dist/pixelcreator_1.0.0_amd64.snap
+```
+
+Conviene probarlo primero en el canal `edge` y pasarlo a `stable` cuando esté verificado
+(`snapcraft release pixelcreator <revisión> stable`). Cada subida necesita una versión nueva
+en `package.json`.

@@ -33,8 +33,31 @@ linux:
   target:
     - AppImage
     - deb
+    - snap
   maintainer: Gustavo Garrido <gustavogarrido.programador@gmail.com>
   category: Graphics
+snap:
+  base: core22
+  confinement: strict
+  grade: stable
+  summary: Convierte imágenes en plantillas de beads (Hama, Perler)
+  description: >-
+    Convierte cualquier imagen en una plantilla para beads de plancha (Hama, Perler, Nabbi y
+    Artkal) con los colores y códigos reales del fabricante. Recorta a la cuadrícula del
+    tablero, edita celdas a mano y exporta PNG, PDF por tableros y la lista de compra en CSV.
+  allowNativeWayland: true
+  # Solo los permisos que la app necesita (la tienda los revisa)
+  plugs:
+    - desktop
+    - desktop-legacy
+    - home
+    - x11
+    - wayland
+    - unity7
+    - browser-support
+    - network
+    - gsettings
+    - opengl
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
