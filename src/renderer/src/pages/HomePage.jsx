@@ -33,7 +33,7 @@ const HomePage = () => {
               Procesar Imagen
             </Link>
             <Link className="w-48 text-center bg-yellow-600 py-3 px-4 rounded-xl shadow-lg font-bold hover:cursor-pointer hover:bg-yellow-700 border-black border-2 uppercase" to={"/credits"}>
-              Creditos
+              Créditos
             </Link>
           </div>
         </>

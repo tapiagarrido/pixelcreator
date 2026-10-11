@@ -1,5 +1,5 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
-import path, { join } from 'path';
+import { app, shell, BrowserWindow } from 'electron';
+import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icono_pc.png?asset';
 
@@ -14,8 +14,7 @@ function createWindow() {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
-      disableHardwareAcceleration: true
+      sandbox: true
     }
   });
 
@@ -41,13 +40,11 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  electronApp.setAppUserModelId('com.electron');
+  electronApp.setAppUserModelId('com.gustavo.pixelcreator');
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window);
   });
-
-  ipcMain.on('ping', () => console.log('pong'));
 
   createWindow();
 

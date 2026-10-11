@@ -2,10 +2,8 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
 
-const InfoCard = () => {
+const CreditsPage = () => {
   return (
     <Card sx={{ maxWidth: 800, margin: '20px auto' }}>
       <CardContent>
@@ -29,4 +27,4 @@ const InfoCard = () => {
   );
 };
 
-export default InfoCard;
+export default CreditsPage;

@@ -1,4 +1,8 @@
 module.exports = {
+  rules: {
+    'react/prop-types': 'off',
+    'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }]
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',

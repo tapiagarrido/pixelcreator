@@ -1,7 +1,7 @@
 {
   "name": "pixelcreator",
   "version": "1.0.0",
-  "description": "An Electron application with React",
+  "description": "Generador de plantillas de beads (Hama, Perler) a partir de imágenes",
   "main": "./out/main/index.js",
   "author": {
     "name": "Gustavo Adolfo Garrido Tapia",
@@ -10,6 +10,7 @@
   "homepage": "https://gustavo-dev.netlify.app/",
   "scripts": {
     "format": "prettier --write .",
+    "test": "vitest run",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
@@ -47,31 +48,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.5",
-    "vite": "^5.3.1"
-  },
-  "build": {
-    "appId": "com.gustavo.pixelcreator",
-    "productName": "PixelCreator",
-    "linux": {
-      "target": [
-        "deb"
-      ],
-      "icon": "resources/icono_pc.png"
-    },
-    "win": {
-      "target": [
-        "nsis"
-      ],
-      "icon": "resources/icono_pc.ico"
-    },
-    "mac": {
-      "target": [
-        "dmg"
-      ],
-      "icon": "resources/icono_pc.icns"
-    },
-    "directories": {
-      "buildResources": "resources"
-    }
+    "vite": "^5.3.1",
+    "vitest": "^2.1.9"
   }
 }
