@@ -26,6 +26,7 @@ dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
   icon: resources/icono_pc.png
+  syncDesktopName: true
   target:
     - AppImage
     - deb

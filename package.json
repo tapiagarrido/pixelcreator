@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Generador de plantillas de beads (Hama, Perler) a partir de imágenes",
   "main": "./out/main/index.js",
+  "desktopName": "pixelcreator.desktop",
   "author": {
     "name": "Gustavo Adolfo Garrido Tapia",
     "email": "gustavogarrido.programador@gmail.com"
