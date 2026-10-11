@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import OpenProjectButton from '../components/OpenProjectButton';
+import { useWorkspace } from '../context/WorkspaceContext';
 import pixelimage from '../../../../public/images/pixel_bg.png';
 import LoadingAnimation from '../../../../public/animations/loading.json';
 import { useState, useEffect } from 'react';
@@ -9,6 +10,7 @@ const HomePage = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { openProject } = useWorkspace();
 
   useEffect(() => {
     const img = new Image();
@@ -52,7 +54,10 @@ const HomePage = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <OpenProjectButton
-              onOpen={(project) => navigate('/process', { state: { project } })}
+              onOpen={(project) => {
+                openProject(project);
+                navigate('/process');
+              }}
               onError={setError}
               className="font-changa text-lg px-4 py-2 rounded-xl border border-gray-500 bg-white hover:bg-gray-100"
             >

@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GrCaretNext, GrDownload } from 'react-icons/gr';
-import { useLocation } from 'react-router-dom';
 import PixelActions from '../components/process/PixelActions';
 import { getCellIndexAt, renderBeadsOnly, renderPrintableSheet } from '../utils/printableSheet';
 import { setCell, withCells } from '../utils/templateEdit';
 import { buildShoppingListCsv } from '../utils/shoppingList';
 import { buildTemplatePdf } from '../utils/exportPdf';
-import { DEFAULT_FILTERS, buildFilteredCanvas, imageToDataUrl } from '../utils/imageFilters';
+import { buildFilteredCanvas, imageToDataUrl } from '../utils/imageFilters';
 import { serializeProject } from '../utils/project';
 import OpenProjectButton from '../components/OpenProjectButton';
+import ImageDropzone from '../components/ImageDropzone';
+import { useWorkspace } from '../context/WorkspaceContext';
 
 const FILTER_CONTROLS = [
   { key: 'brightness', label: 'Brillo', min: 0, max: 2, step: 0.1 },
@@ -38,25 +39,25 @@ const FilterControls = ({ filters, onChange }) => (
 );
 
 const ProcessElementPage = () => {
-  const location = useLocation();
-  const navState = location.state || {};
+  // El trabajo vive en el contexto: sobrevive a navegar a otra pantalla y volver.
+  const { state: workspace, update, reset, openProject } = useWorkspace();
+  const { image, templateInfo, componentPixel, filters, showNumbers, boardSize } = workspace;
 
-  const openedProject = navState.project || null;
+  const setImage = (value) => update({ image: value });
+  const setTemplateInfo = (value) => update({ templateInfo: value });
+  const setComponentPixel = (value) => update({ componentPixel: value });
+  const setShowNumbers = (value) => update({ showNumbers: value });
+  const setBoardSize = (value) => update({ boardSize: value });
+  const setFilters = (value) =>
+    update((previous) => ({
+      filters: typeof value === 'function' ? value(previous.filters) : value
+    }));
 
-  // `image` es siempre la imagen original; la plantilla generada vive aparte en `templateInfo`.
-  const [image, setImage] = useState(openedProject?.image || navState.imageSrc || null);
-  const [templateInfo, setTemplateInfo] = useState(openedProject?.templateInfo || null);
-  const [componentPixel, setComponentPixel] = useState(Boolean(openedProject || navState.imageSrc));
-  const [filters, setFilters] = useState(openedProject?.filters || DEFAULT_FILTERS);
-  const [showNumbers, setShowNumbers] = useState(openedProject?.showNumbers || false);
-  const [boardSize, setBoardSize] = useState(openedProject?.boardSize || 29);
   const [error, setError] = useState('');
   const [exportingPdf, setExportingPdf] = useState(false);
   // Edicion manual: herramienta activa, color del pincel e historial para deshacer/rehacer
   const [tool, setTool] = useState('none'); // 'none' | 'paint' | 'pick' | 'erase'
-  const [brushColor, setBrushColor] = useState(
-    openedProject?.templateInfo?.paletteColors?.[0] || null
-  );
+  const [brushColor, setBrushColor] = useState(templateInfo?.paletteColors?.[0] || null);
   const [history, setHistory] = useState({ undo: [], redo: [] });
 
   const canvasRef = useRef(null);
@@ -70,10 +71,7 @@ const ProcessElementPage = () => {
     setHistory({ undo: [], redo: [] });
   };
 
-  const handleImageSelected = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
+  const handleImageFile = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
@@ -306,23 +304,17 @@ const ProcessElementPage = () => {
   };
 
   const handleOpenProject = (project) => {
-    setImage(project.image);
-    setFilters(project.filters);
-    setShowNumbers(project.showNumbers);
-    setBoardSize(project.boardSize);
-    setTemplateInfo(project.templateInfo);
+    openProject(project);
     setBrushColor(project.templateInfo?.paletteColors?.[0] || null);
     setTool('none');
     setHistory({ undo: [], redo: [] });
-    setComponentPixel(true);
     setError('');
   };
 
   const handleRestartComponent = () => {
-    setImage(null);
-    clearResult();
-    setComponentPixel(false);
-    setFilters(DEFAULT_FILTERS);
+    reset();
+    setTool('none');
+    setHistory({ undo: [], redo: [] });
   };
 
   return (
@@ -368,8 +360,8 @@ const ProcessElementPage = () => {
                 getSourceCanvas={() => buildFilteredCanvas(image, filters)}
                 onProcessImage={handleProcessImage}
                 onRestart={handleRestartComponent}
-                defaultBeadWidth={navState.beadWidth}
-                defaultBeadHeight={navState.beadHeight}
+                defaultBeadWidth={workspace.beadWidth}
+                defaultBeadHeight={workspace.beadHeight}
                 hasResult={Boolean(templateInfo)}
               />
             </>
@@ -384,41 +376,7 @@ const ProcessElementPage = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-center">
-                <label
-                  htmlFor="dropzone-file"
-                  className="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-300  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-500"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p className="mb-2 text-sm text-gray-600 dark:text-gray-500">
-                      <span className="font-semibold">Click para buscar imagen</span>
-                    </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-500">SVG, PNG, JPG o webp</p>
-                  </div>
-                  <input
-                    id="dropzone-file"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageSelected}
-                    className="hidden"
-                  />
-                </label>
-              </div>
+              <ImageDropzone onFile={handleImageFile} />
 
               <div className="mt-8">
                 <FilterControls filters={filters} onChange={handleFilterChange} />
