@@ -142,7 +142,7 @@ export const renderPrintableSheet = (info, { showNumbers = false } = {}) => {
     ctx.textAlign = 'left';
     ctx.font = `17px ${FONT}`;
     ctx.fillStyle = '#111111';
-    ctx.fillText(color.name, L.legendX + box + 10, y + LEGEND_ROW_H / 2 + 1);
+    ctx.fillText(color.code ? `${color.code}  ${color.name}` : color.name, L.legendX + box + 10, y + LEGEND_ROW_H / 2 + 1);
 
     ctx.textAlign = 'right';
     ctx.fillText(String(color.count), L.legendX + LEGEND_W, y + LEGEND_ROW_H / 2 + 1);

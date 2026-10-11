@@ -209,7 +209,7 @@ export const buildBeadTemplate = (
   const colorUsage = Array.from(counter.entries())
     .map(([id, count]) => {
       const info = palette.colors.find((color) => color.id === id);
-      return { id, name: info?.name || id, hex: info?.hex || '#000000', count };
+      return { id, code: info?.code, name: info?.name || id, hex: info?.hex || '#000000', count };
     })
     .sort((a, b) => b.count - a.count);
 

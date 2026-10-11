@@ -26,3 +26,9 @@ npm run build:linux   # Linux (AppImage, deb)
 ```
 
 La configuración de empaquetado está en `electron-builder.yml`.
+
+## Paletas de colores
+
+Los colores de Hama, Perler, Nabbi y Artkal (códigos, nombres y RGB medido sobre beads reales)
+vienen de [maxcleme/beadcolors](https://github.com/maxcleme/beadcolors) (licencia MIT). Para
+regenerarlos: `node scripts/gen-palettes.mjs`.

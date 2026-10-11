@@ -21,16 +21,22 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
   const [exactBeadHeight, setExactBeadHeight] = useState(defaultBeadHeight || 58);
   const [boardPreset, setBoardPreset] = useState('29');
   const [selectedBrand, setSelectedBrand] = useState(defaultBrand);
-  const [selectedPaletteId, setSelectedPaletteId] = useState(defaultPalette?.id || 'hama-midi-base');
+  const [selectedPaletteId, setSelectedPaletteId] = useState(defaultPalette?.id || '');
   const [customPalette, setCustomPalette] = useState(null);
   const [xmlPaletteName, setXmlPaletteName] = useState('XML importado');
   const [xmlInput, setXmlInput] = useState('');
   const [xmlError, setXmlError] = useState('');
   const [maxColors, setMaxColors] = useState(0);
   const [dither, setDither] = useState(false);
+  const [includeSpecial, setIncludeSpecial] = useState(false);
   const borderWidth = 0.8;
   const selectedBuiltinPalette = getPaletteById(selectedPaletteId);
-  const activePalette = customPalette || selectedBuiltinPalette || defaultPalette;
+  const basePalette = customPalette || selectedBuiltinPalette || defaultPalette;
+  const specialCount = basePalette.colors.filter((color) => color.special).length;
+  // Por defecto se excluyen los beads translucidos, glow, glitter, etc.
+  const activePalette = includeSpecial || specialCount === 0
+    ? basePalette
+    : { ...basePalette, colors: basePalette.colors.filter((color) => !color.special) };
   const brandPalettes = getPalettesByBrand(selectedBrand);
   const boardOptions = [
     { label: '1 tablero (29 beads de ancho)', value: '29' },
@@ -171,7 +177,7 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
           }}
         >
           {brandPalettes.map((palette) => (
-            <option key={palette.id} value={palette.id}>{palette.name}</option>
+            <option key={palette.id} value={palette.id}>{`${palette.name} (${palette.colors.length} colores)`}</option>
           ))}
           {customPalette ? <option value={'__custom__'}>{`${customPalette.name} (XML)`}</option> : null}
         </select>
@@ -291,6 +297,13 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
             ))}
           </select>
         </div>
+      ) : null}
+
+      {specialCount > 0 ? (
+        <label className='flex gap-3 items-center mb-4 cursor-pointer select-none text-base'>
+          <input type='checkbox' checked={includeSpecial} onChange={(event) => setIncludeSpecial(event.target.checked)} />
+          <span>Incluir beads especiales ({specialCount}: translúcidos, glow, glitter…)</span>
+        </label>
       ) : null}
 
       <div className='flex gap-4 items-baseline mb-4'>

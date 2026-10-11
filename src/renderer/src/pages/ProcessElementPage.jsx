@@ -235,7 +235,7 @@ const ProcessElementPage = () => {
                             className='inline-block w-4 h-4 rounded border border-black/20'
                             style={{ backgroundColor: color.hex }}
                           />
-                          <span>{color.name}</span>
+                          <span>{color.code ? `${color.code} · ${color.name}` : color.name}</span>
                         </div>
                         <span className='font-semibold'>{color.count}</span>
                       </div>

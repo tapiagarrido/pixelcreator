@@ -1,67 +1,7 @@
-export const HAMA_MIDI_BASE_PALETTE = [
-  { id: 'white', name: 'Blanco', hex: '#F4F4F4' },
-  { id: 'black', name: 'Negro', hex: '#1A1A1A' },
-  { id: 'gray', name: 'Gris', hex: '#8A8A8A' },
-  { id: 'dark-brown', name: 'Cafe Oscuro', hex: '#5B3A29' },
-  { id: 'brown', name: 'Cafe', hex: '#8C5A3C' },
-  { id: 'beige', name: 'Beige', hex: '#D8C4A3' },
-  { id: 'dark-red', name: 'Rojo Oscuro', hex: '#7B1E1E' },
-  { id: 'red', name: 'Rojo', hex: '#D53333' },
-  { id: 'orange', name: 'Naranja', hex: '#EB7C2D' },
-  { id: 'yellow', name: 'Amarillo', hex: '#F2D33B' },
-  { id: 'dark-green', name: 'Verde Oscuro', hex: '#2F6C3A' },
-  { id: 'green', name: 'Verde', hex: '#61A84C' },
-  { id: 'mint', name: 'Menta', hex: '#A5D7B5' },
-  { id: 'dark-blue', name: 'Azul Oscuro', hex: '#254A8A' },
-  { id: 'blue', name: 'Azul', hex: '#3B7ED0' },
-  { id: 'light-blue', name: 'Azul Claro', hex: '#89BFEF' },
-  { id: 'purple', name: 'Morado', hex: '#7D4BA3' },
-  { id: 'pink', name: 'Rosa', hex: '#EB9DC3' },
-  { id: 'skin-light', name: 'Piel Clara', hex: '#F2C7A4' },
-  { id: 'skin-dark', name: 'Piel Oscura', hex: '#C68D67' }
-]
+import beadPalettes from '../data/beadPalettes.json'
 
-export const PERLER_BASIC_PALETTE = [
-  { id: 'perler-white', name: 'White', hex: '#F4F4F2' },
-  { id: 'perler-black', name: 'Black', hex: '#171717' },
-  { id: 'perler-gray', name: 'Gray', hex: '#8B8F94' },
-  { id: 'perler-charcoal', name: 'Charcoal', hex: '#51545C' },
-  { id: 'perler-brown', name: 'Brown', hex: '#7F4A2F' },
-  { id: 'perler-tan', name: 'Tan', hex: '#CCAE85' },
-  { id: 'perler-red', name: 'Red', hex: '#C3262E' },
-  { id: 'perler-raspberry', name: 'Raspberry', hex: '#8D2045' },
-  { id: 'perler-orange', name: 'Orange', hex: '#EB6D22' },
-  { id: 'perler-cheddar', name: 'Cheddar', hex: '#ECA430' },
-  { id: 'perler-yellow', name: 'Yellow', hex: '#F0D437' },
-  { id: 'perler-kiwi-lime', name: 'Kiwi Lime', hex: '#8DBA3E' },
-  { id: 'perler-green', name: 'Green', hex: '#2E8D45' },
-  { id: 'perler-emerald', name: 'Emerald', hex: '#1D6E58' },
-  { id: 'perler-light-blue', name: 'Light Blue', hex: '#7ABCE3' },
-  { id: 'perler-blue', name: 'Blue', hex: '#2F6BB1' },
-  { id: 'perler-dark-blue', name: 'Dark Blue', hex: '#1E3E74' },
-  { id: 'perler-purple', name: 'Purple', hex: '#6C4799' },
-  { id: 'perler-pink', name: 'Pink', hex: '#F0A4C6' },
-  { id: 'perler-peach', name: 'Peach', hex: '#F2C6A4' }
-]
-
-export const BUILTIN_BEAD_PALETTES = [
-  {
-    id: 'hama-midi-base',
-    brand: 'hama',
-    brandLabel: 'Hama',
-    name: 'Hama Midi (base)',
-    source: 'manual-base',
-    colors: HAMA_MIDI_BASE_PALETTE
-  },
-  {
-    id: 'perler-basic',
-    brand: 'perler',
-    brandLabel: 'Perler',
-    name: 'Perler (basic)',
-    source: 'manual-base',
-    colors: PERLER_BASIC_PALETTE
-  }
-]
+// Paletas reales por fabricante (ver scripts/gen-palettes.mjs)
+export const BUILTIN_BEAD_PALETTES = beadPalettes
 
 export const BEAD_BRANDS = Array.from(
   BUILTIN_BEAD_PALETTES.reduce((brandMap, palette) => {
@@ -102,7 +42,7 @@ const calculateDistance = (colorA, colorB) => {
   return dr * dr + dg * dg + db * db
 }
 
-export const findClosestPaletteColor = (rgbColor, palette = HAMA_MIDI_BASE_PALETTE) => {
+export const findClosestPaletteColor = (rgbColor, palette = BUILTIN_BEAD_PALETTES[0].colors) => {
   if (!palette || palette.length === 0) {
     return { id: 'empty-palette', name: 'Sin color', hex: '#000000' }
   }

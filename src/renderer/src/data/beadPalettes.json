@@ -1,0 +1,2609 @@
+[
+  {
+    "id": "hama-midi",
+    "brand": "hama",
+    "brandLabel": "Hama",
+    "name": "Hama Midi",
+    "source": "beadcolors",
+    "colors": [
+      {
+        "id": "hama-midi-H01",
+        "code": "H01",
+        "name": "White",
+        "hex": "#E5ECF1"
+      },
+      {
+        "id": "hama-midi-H02",
+        "code": "H02",
+        "name": "Cream",
+        "hex": "#E4E4C5"
+      },
+      {
+        "id": "hama-midi-H03",
+        "code": "H03",
+        "name": "Yellow",
+        "hex": "#E9C704"
+      },
+      {
+        "id": "hama-midi-H04",
+        "code": "H04",
+        "name": "Orange",
+        "hex": "#D14803"
+      },
+      {
+        "id": "hama-midi-H05",
+        "code": "H05",
+        "name": "Red",
+        "hex": "#B4060E"
+      },
+      {
+        "id": "hama-midi-H06",
+        "code": "H06",
+        "name": "Pink",
+        "hex": "#EA8AA5"
+      },
+      {
+        "id": "hama-midi-H07",
+        "code": "H07",
+        "name": "Purple",
+        "hex": "#712297"
+      },
+      {
+        "id": "hama-midi-H08",
+        "code": "H08",
+        "name": "Blue",
+        "hex": "#0239A3"
+      },
+      {
+        "id": "hama-midi-H09",
+        "code": "H09",
+        "name": "Light Blue",
+        "hex": "#025BC3"
+      },
+      {
+        "id": "hama-midi-H10",
+        "code": "H10",
+        "name": "Green",
+        "hex": "#027643"
+      },
+      {
+        "id": "hama-midi-H11",
+        "code": "H11",
+        "name": "Light Green",
+        "hex": "#19CDA7"
+      },
+      {
+        "id": "hama-midi-H12",
+        "code": "H12",
+        "name": "Brown",
+        "hex": "#3E271A"
+      },
+      {
+        "id": "hama-midi-H13",
+        "code": "H13",
+        "name": "Transparent Red",
+        "hex": "#C02435",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H14",
+        "code": "H14",
+        "name": "Transparent Yellow",
+        "hex": "#E4AA32",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H16",
+        "code": "H16",
+        "name": "Transparent Green",
+        "hex": "#37B876",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H17",
+        "code": "H17",
+        "name": "Grey",
+        "hex": "#838F98"
+      },
+      {
+        "id": "hama-midi-H18",
+        "code": "H18",
+        "name": "Black",
+        "hex": "#141315"
+      },
+      {
+        "id": "hama-midi-H19",
+        "code": "H19",
+        "name": "Clear",
+        "hex": "#D8D2CE",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H20",
+        "code": "H20",
+        "name": "Reddish Brown",
+        "hex": "#8D2A0F"
+      },
+      {
+        "id": "hama-midi-H21",
+        "code": "H21",
+        "name": "Light Brown",
+        "hex": "#BE6C21"
+      },
+      {
+        "id": "hama-midi-H22",
+        "code": "H22",
+        "name": "Dark Red",
+        "hex": "#91020A"
+      },
+      {
+        "id": "hama-midi-H24",
+        "code": "H24",
+        "name": "Translucent Purple",
+        "hex": "#683E9A",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H25",
+        "code": "H25",
+        "name": "Translucent Brown",
+        "hex": "#87593D",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H26",
+        "code": "H26",
+        "name": "Matt Rose",
+        "hex": "#E8A498"
+      },
+      {
+        "id": "hama-midi-H27",
+        "code": "H27",
+        "name": "Beige",
+        "hex": "#DCB18E"
+      },
+      {
+        "id": "hama-midi-H28",
+        "code": "H28",
+        "name": "Dark Green",
+        "hex": "#1E2C1C"
+      },
+      {
+        "id": "hama-midi-H29",
+        "code": "H29",
+        "name": "Claret",
+        "hex": "#BF0142"
+      },
+      {
+        "id": "hama-midi-H30",
+        "code": "H30",
+        "name": "Burgundy",
+        "hex": "#4E0C1B"
+      },
+      {
+        "id": "hama-midi-H31",
+        "code": "H31",
+        "name": "Turquoise",
+        "hex": "#489AB9"
+      },
+      {
+        "id": "hama-midi-H32",
+        "code": "H32",
+        "name": "Neon Fuchsia",
+        "hex": "#FF208D"
+      },
+      {
+        "id": "hama-midi-H33",
+        "code": "H33",
+        "name": "Cerise",
+        "hex": "#FF3956"
+      },
+      {
+        "id": "hama-midi-H34",
+        "code": "H34",
+        "name": "Neon Yellow",
+        "hex": "#E5EF13"
+      },
+      {
+        "id": "hama-midi-H35",
+        "code": "H35",
+        "name": "Neon Red",
+        "hex": "#FF2833"
+      },
+      {
+        "id": "hama-midi-H36",
+        "code": "H36",
+        "name": "Neon Blue",
+        "hex": "#2353B0"
+      },
+      {
+        "id": "hama-midi-H37",
+        "code": "H37",
+        "name": "Neon Green",
+        "hex": "#06B73C"
+      },
+      {
+        "id": "hama-midi-H38",
+        "code": "H38",
+        "name": "Neon Orange",
+        "hex": "#FD8600"
+      },
+      {
+        "id": "hama-midi-H39",
+        "code": "H39",
+        "name": "Fluorescent Yellow",
+        "hex": "#F1F21C"
+      },
+      {
+        "id": "hama-midi-H40",
+        "code": "H40",
+        "name": "Fluorescent Orange",
+        "hex": "#FE630B"
+      },
+      {
+        "id": "hama-midi-H41",
+        "code": "H41",
+        "name": "Fluorescent Blue",
+        "hex": "#2659B2"
+      },
+      {
+        "id": "hama-midi-H42",
+        "code": "H42",
+        "name": "Fluorescent Green",
+        "hex": "#0CBD51"
+      },
+      {
+        "id": "hama-midi-H43",
+        "code": "H43",
+        "name": "Pastel Yellow",
+        "hex": "#E7E45A"
+      },
+      {
+        "id": "hama-midi-H44",
+        "code": "H44",
+        "name": "Pastel Red",
+        "hex": "#F96160"
+      },
+      {
+        "id": "hama-midi-H45",
+        "code": "H45",
+        "name": "Pastel Purple",
+        "hex": "#8E69CD"
+      },
+      {
+        "id": "hama-midi-H46",
+        "code": "H46",
+        "name": "Pastel Blue",
+        "hex": "#51AEE4"
+      },
+      {
+        "id": "hama-midi-H47",
+        "code": "H47",
+        "name": "Pastel Green",
+        "hex": "#80DF96"
+      },
+      {
+        "id": "hama-midi-H48",
+        "code": "H48",
+        "name": "Pastel Pink",
+        "hex": "#D67AD1"
+      },
+      {
+        "id": "hama-midi-H49",
+        "code": "H49",
+        "name": "Azure",
+        "hex": "#0FACD1"
+      },
+      {
+        "id": "hama-midi-H60",
+        "code": "H60",
+        "name": "Teddybear Brown",
+        "hex": "#F0981E"
+      },
+      {
+        "id": "hama-midi-H70",
+        "code": "H70",
+        "name": "Light Grey",
+        "hex": "#A5B3C0"
+      },
+      {
+        "id": "hama-midi-H71",
+        "code": "H71",
+        "name": "Dark Grey",
+        "hex": "#445059"
+      },
+      {
+        "id": "hama-midi-H75",
+        "code": "H75",
+        "name": "Tan",
+        "hex": "#B78C6D"
+      },
+      {
+        "id": "hama-midi-H76",
+        "code": "H76",
+        "name": "Nougat",
+        "hex": "#8A5937"
+      },
+      {
+        "id": "hama-midi-H77",
+        "code": "H77",
+        "name": "Cloudy White",
+        "hex": "#CED1C8"
+      },
+      {
+        "id": "hama-midi-H78",
+        "code": "H78",
+        "name": "Light Peach",
+        "hex": "#F7C1AA"
+      },
+      {
+        "id": "hama-midi-H79",
+        "code": "H79",
+        "name": "Apricot",
+        "hex": "#F87633"
+      },
+      {
+        "id": "hama-midi-H82",
+        "code": "H82",
+        "name": "Plum",
+        "hex": "#91175A"
+      },
+      {
+        "id": "hama-midi-H83",
+        "code": "H83",
+        "name": "Petrol Blue",
+        "hex": "#037A9F"
+      },
+      {
+        "id": "hama-midi-H84",
+        "code": "H84",
+        "name": "Olive Green",
+        "hex": "#687836"
+      },
+      {
+        "id": "hama-midi-H95",
+        "code": "H95",
+        "name": "Pastel Rose",
+        "hex": "#DD9BA3"
+      },
+      {
+        "id": "hama-midi-H96",
+        "code": "H96",
+        "name": "Pastel Lilac",
+        "hex": "#B491AD"
+      },
+      {
+        "id": "hama-midi-H97",
+        "code": "H97",
+        "name": "Pastel Ice Blue",
+        "hex": "#8AAFC2"
+      },
+      {
+        "id": "hama-midi-H98",
+        "code": "H98",
+        "name": "Pastel Mint",
+        "hex": "#94CCA4"
+      },
+      {
+        "id": "hama-midi-H15",
+        "code": "H15",
+        "name": "Transparent Blue",
+        "hex": "#487ED5",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H55",
+        "code": "H55",
+        "name": "Green (Glow in the Dark)",
+        "hex": "#FAF8ED",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H56",
+        "code": "H56",
+        "name": "Red (Glow in the Dark)",
+        "hex": "#EDBF9F",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H57",
+        "code": "H57",
+        "name": "Blue (Glow in the Dark)",
+        "hex": "#C4D0E3",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H61",
+        "code": "H61",
+        "name": "Gold",
+        "hex": "#D99350"
+      },
+      {
+        "id": "hama-midi-H62",
+        "code": "H62",
+        "name": "Silver",
+        "hex": "#48474A"
+      },
+      {
+        "id": "hama-midi-H63",
+        "code": "H63",
+        "name": "Bronze",
+        "hex": "#42312F"
+      },
+      {
+        "id": "hama-midi-H64",
+        "code": "H64",
+        "name": "Pearl",
+        "hex": "#EFEBE4"
+      },
+      {
+        "id": "hama-midi-H72",
+        "code": "H72",
+        "name": "Translucent Pink",
+        "hex": "#F097B0",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H73",
+        "code": "H73",
+        "name": "Translucent Aqua",
+        "hex": "#59AEF5",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H74",
+        "code": "H74",
+        "name": "Translucent Lilac",
+        "hex": "#5B55BD",
+        "special": true
+      },
+      {
+        "id": "hama-midi-H101",
+        "code": "H101",
+        "name": "Eucalyptus",
+        "hex": "#A9C39B"
+      },
+      {
+        "id": "hama-midi-H102",
+        "code": "H102",
+        "name": "Forest Green",
+        "hex": "#356B2D"
+      },
+      {
+        "id": "hama-midi-H103",
+        "code": "H103",
+        "name": "Light Yellow",
+        "hex": "#FFE660"
+      },
+      {
+        "id": "hama-midi-H104",
+        "code": "H104",
+        "name": "Lime",
+        "hex": "#BCD122"
+      },
+      {
+        "id": "hama-midi-H105",
+        "code": "H105",
+        "name": "Light Apricot",
+        "hex": "#FFAC78"
+      },
+      {
+        "id": "hama-midi-H106",
+        "code": "H106",
+        "name": "Light Lavender",
+        "hex": "#CCC5ED"
+      },
+      {
+        "id": "hama-midi-H107",
+        "code": "H107",
+        "name": "Lavender",
+        "hex": "#6A87C1"
+      },
+      {
+        "id": "hama-midi-H108",
+        "code": "H108",
+        "name": "Aubergine",
+        "hex": "#2A2536"
+      },
+      {
+        "id": "hama-midi-H109",
+        "code": "H109",
+        "name": "Cloudy Grey",
+        "hex": "#8A847F"
+      },
+      {
+        "id": "hama-midi-H110",
+        "code": "H110",
+        "name": "Matcha",
+        "hex": "#838956"
+      },
+      {
+        "id": "hama-midi-H111",
+        "code": "H111",
+        "name": "Dark Blush",
+        "hex": "#835854"
+      },
+      {
+        "id": "hama-midi-H112",
+        "code": "H112",
+        "name": "Blush",
+        "hex": "#AD8A82"
+      },
+      {
+        "id": "hama-midi-H113",
+        "code": "H113",
+        "name": "Aqua",
+        "hex": "#5F887B"
+      },
+      {
+        "id": "hama-midi-H114",
+        "code": "H114",
+        "name": "Cherry Red",
+        "hex": "#9A2C31"
+      },
+      {
+        "id": "hama-midi-H115",
+        "code": "H115",
+        "name": "Bright Green",
+        "hex": "#6E975F"
+      },
+      {
+        "id": "hama-midi-H116",
+        "code": "H116",
+        "name": "Midnight Blue",
+        "hex": "#222838"
+      },
+      {
+        "id": "hama-midi-H117",
+        "code": "H117",
+        "name": "Taupe Grey",
+        "hex": "#777169"
+      },
+      {
+        "id": "hama-midi-H118",
+        "code": "H118",
+        "name": "Maroon Red",
+        "hex": "#612932"
+      },
+      {
+        "id": "hama-midi-H119",
+        "code": "H119",
+        "name": "Sky Blue",
+        "hex": "#4167B4"
+      }
+    ]
+  },
+  {
+    "id": "perler",
+    "brand": "perler",
+    "brandLabel": "Perler",
+    "name": "Perler",
+    "source": "beadcolors",
+    "colors": [
+      {
+        "id": "perler-80-15179",
+        "code": "80-15179",
+        "name": "Evergreen",
+        "hex": "#305545"
+      },
+      {
+        "id": "perler-80-15181",
+        "code": "80-15181",
+        "name": "Light Grey",
+        "hex": "#B3BAB8"
+      },
+      {
+        "id": "perler-80-15182",
+        "code": "80-15182",
+        "name": "Lavender",
+        "hex": "#AF9FCE"
+      },
+      {
+        "id": "perler-80-15199",
+        "code": "80-15199",
+        "name": "Shamrock",
+        "hex": "#008F53"
+      },
+      {
+        "id": "perler-80-15200",
+        "code": "80-15200",
+        "name": "Cobalt",
+        "hex": "#0065B1"
+      },
+      {
+        "id": "perler-80-15201",
+        "code": "80-15201",
+        "name": "Midnight",
+        "hex": "#2F3C55"
+      },
+      {
+        "id": "perler-80-15202",
+        "code": "80-15202",
+        "name": "Robin's Egg",
+        "hex": "#A9CDD5"
+      },
+      {
+        "id": "perler-80-15203",
+        "code": "80-15203",
+        "name": "Flamingo",
+        "hex": "#F2AFB7"
+      },
+      {
+        "id": "perler-80-15204",
+        "code": "80-15204",
+        "name": "Salmon",
+        "hex": "#E1747A"
+      },
+      {
+        "id": "perler-80-15205",
+        "code": "80-15205",
+        "name": "Fawn",
+        "hex": "#C9A385"
+      },
+      {
+        "id": "perler-80-15206",
+        "code": "80-15206",
+        "name": "Pewter",
+        "hex": "#94A19D"
+      },
+      {
+        "id": "perler-80-15207",
+        "code": "80-15207",
+        "name": "Charcoal",
+        "hex": "#4F595A"
+      },
+      {
+        "id": "perler-80-15208",
+        "code": "80-15208",
+        "name": "Toasted Marshmallow",
+        "hex": "#DEDACE"
+      },
+      {
+        "id": "perler-80-15210",
+        "code": "80-15210",
+        "name": "Orchid",
+        "hex": "#B1628E"
+      },
+      {
+        "id": "perler-80-15211",
+        "code": "80-15211",
+        "name": "Tomato",
+        "hex": "#D14337"
+      },
+      {
+        "id": "perler-80-15212",
+        "code": "80-15212",
+        "name": "Spice",
+        "hex": "#D9593A"
+      },
+      {
+        "id": "perler-80-15213",
+        "code": "80-15213",
+        "name": "Apricot",
+        "hex": "#F5A168"
+      },
+      {
+        "id": "perler-80-15214",
+        "code": "80-15214",
+        "name": "Sherbet",
+        "hex": "#D8E47C"
+      },
+      {
+        "id": "perler-80-15215",
+        "code": "80-15215",
+        "name": "Mist",
+        "hex": "#93B0BD"
+      },
+      {
+        "id": "perler-80-15216",
+        "code": "80-15216",
+        "name": "Sky",
+        "hex": "#4AC0D8"
+      },
+      {
+        "id": "perler-80-15217",
+        "code": "80-15217",
+        "name": "Lagoon",
+        "hex": "#00A4AC"
+      },
+      {
+        "id": "perler-80-15218",
+        "code": "80-15218",
+        "name": "Teal",
+        "hex": "#047F8A"
+      },
+      {
+        "id": "perler-80-15219",
+        "code": "80-15219",
+        "name": "Fern",
+        "hex": "#7F971A"
+      },
+      {
+        "id": "perler-80-15220",
+        "code": "80-15220",
+        "name": "Olive",
+        "hex": "#696E31"
+      },
+      {
+        "id": "perler-80-15961",
+        "code": "80-15961",
+        "name": "Cherry",
+        "hex": "#9D2B3A"
+      },
+      {
+        "id": "perler-80-19001",
+        "code": "80-19001",
+        "name": "White",
+        "hex": "#EAEFEE"
+      },
+      {
+        "id": "perler-80-19002",
+        "code": "80-19002",
+        "name": "Creme",
+        "hex": "#E1E2BB"
+      },
+      {
+        "id": "perler-80-19003",
+        "code": "80-19003",
+        "name": "Yellow",
+        "hex": "#E7CE3E"
+      },
+      {
+        "id": "perler-80-19004",
+        "code": "80-19004",
+        "name": "Orange",
+        "hex": "#EB7B31"
+      },
+      {
+        "id": "perler-80-19005",
+        "code": "80-19005",
+        "name": "Red",
+        "hex": "#B0353C"
+      },
+      {
+        "id": "perler-80-19006",
+        "code": "80-19006",
+        "name": "Bubblegum",
+        "hex": "#D8729A"
+      },
+      {
+        "id": "perler-80-19007",
+        "code": "80-19007",
+        "name": "Purple",
+        "hex": "#684B86"
+      },
+      {
+        "id": "perler-80-19008",
+        "code": "80-19008",
+        "name": "Dark Blue",
+        "hex": "#0E5092"
+      },
+      {
+        "id": "perler-80-19009",
+        "code": "80-19009",
+        "name": "Light Blue",
+        "hex": "#278CC9"
+      },
+      {
+        "id": "perler-80-19010",
+        "code": "80-19010",
+        "name": "Dark Green",
+        "hex": "#007B4E"
+      },
+      {
+        "id": "perler-80-19011",
+        "code": "80-19011",
+        "name": "Light Green",
+        "hex": "#18C7B1"
+      },
+      {
+        "id": "perler-80-19012",
+        "code": "80-19012",
+        "name": "Brown",
+        "hex": "#674C44"
+      },
+      {
+        "id": "perler-80-19017",
+        "code": "80-19017",
+        "name": "Grey",
+        "hex": "#909497"
+      },
+      {
+        "id": "perler-80-19018",
+        "code": "80-19018",
+        "name": "Black",
+        "hex": "#323234"
+      },
+      {
+        "id": "perler-80-19020",
+        "code": "80-19020",
+        "name": "Rust",
+        "hex": "#995043"
+      },
+      {
+        "id": "perler-80-19021",
+        "code": "80-19021",
+        "name": "Light Brown",
+        "hex": "#936848"
+      },
+      {
+        "id": "perler-80-19033",
+        "code": "80-19033",
+        "name": "Peach",
+        "hex": "#E9BFB9"
+      },
+      {
+        "id": "perler-80-19035",
+        "code": "80-19035",
+        "name": "Tan",
+        "hex": "#C5AC90"
+      },
+      {
+        "id": "perler-80-19038",
+        "code": "80-19038",
+        "name": "Magenta",
+        "hex": "#E04284"
+      },
+      {
+        "id": "perler-80-19052",
+        "code": "80-19052",
+        "name": "Pastel Blue",
+        "hex": "#4A9CCF"
+      },
+      {
+        "id": "perler-80-19053",
+        "code": "80-19053",
+        "name": "Pastel Green",
+        "hex": "#6DCC94"
+      },
+      {
+        "id": "perler-80-19054",
+        "code": "80-19054",
+        "name": "Pastel Lavender",
+        "hex": "#937FBF"
+      },
+      {
+        "id": "perler-80-19056",
+        "code": "80-19056",
+        "name": "Pastel Yellow",
+        "hex": "#E9E290"
+      },
+      {
+        "id": "perler-80-19057",
+        "code": "80-19057",
+        "name": "Cheddar",
+        "hex": "#FBB146"
+      },
+      {
+        "id": "perler-80-19058",
+        "code": "80-19058",
+        "name": "Toothpaste",
+        "hex": "#96D1D4"
+      },
+      {
+        "id": "perler-80-19059",
+        "code": "80-19059",
+        "name": "Hot Coral",
+        "hex": "#DD595B"
+      },
+      {
+        "id": "perler-80-19060",
+        "code": "80-19060",
+        "name": "Plum",
+        "hex": "#A75D9D"
+      },
+      {
+        "id": "perler-80-19061",
+        "code": "80-19061",
+        "name": "Kiwi Lime",
+        "hex": "#69B845"
+      },
+      {
+        "id": "perler-80-19062",
+        "code": "80-19062",
+        "name": "Turquoise",
+        "hex": "#0098C5"
+      },
+      {
+        "id": "perler-80-19063",
+        "code": "80-19063",
+        "name": "Blush",
+        "hex": "#F99297"
+      },
+      {
+        "id": "perler-80-19070",
+        "code": "80-19070",
+        "name": "Periwinkle Blue",
+        "hex": "#6683B7"
+      },
+      {
+        "id": "perler-80-19079",
+        "code": "80-19079",
+        "name": "Light Pink",
+        "hex": "#E1BCCE"
+      },
+      {
+        "id": "perler-80-19080",
+        "code": "80-19080",
+        "name": "Green",
+        "hex": "#4DAB64"
+      },
+      {
+        "id": "perler-80-19083",
+        "code": "80-19083",
+        "name": "Pink",
+        "hex": "#D45496"
+      },
+      {
+        "id": "perler-80-19088",
+        "code": "80-19088",
+        "name": "Raspberry",
+        "hex": "#983864"
+      },
+      {
+        "id": "perler-80-19090",
+        "code": "80-19090",
+        "name": "Butterscotch",
+        "hex": "#DA9964"
+      },
+      {
+        "id": "perler-80-19091",
+        "code": "80-19091",
+        "name": "Parrot Green",
+        "hex": "#009188"
+      },
+      {
+        "id": "perler-80-19092",
+        "code": "80-19092",
+        "name": "Dark Grey",
+        "hex": "#585C61"
+      },
+      {
+        "id": "perler-80-19093",
+        "code": "80-19093",
+        "name": "Blueberry Creme",
+        "hex": "#85A8E3"
+      },
+      {
+        "id": "perler-80-19096",
+        "code": "80-19096",
+        "name": "Cranapple",
+        "hex": "#843947"
+      },
+      {
+        "id": "perler-80-19097",
+        "code": "80-19097",
+        "name": "Prickly Pear",
+        "hex": "#BBC938"
+      },
+      {
+        "id": "perler-80-19098",
+        "code": "80-19098",
+        "name": "Sand",
+        "hex": "#E5BE9E"
+      },
+      {
+        "id": "perler-80-15240",
+        "code": "80-15240",
+        "name": "Mint",
+        "hex": "#B3EED5"
+      },
+      {
+        "id": "perler-80-15241",
+        "code": "80-15241",
+        "name": "Sour Apple",
+        "hex": "#A3DE6F"
+      },
+      {
+        "id": "perler-80-15242",
+        "code": "80-15242",
+        "name": "Cotton Candy",
+        "hex": "#F479B0"
+      },
+      {
+        "id": "perler-80-15243",
+        "code": "80-15243",
+        "name": "Grape",
+        "hex": "#503B9C"
+      },
+      {
+        "id": "perler-80-15244",
+        "code": "80-15244",
+        "name": "Rose",
+        "hex": "#D25D72"
+      },
+      {
+        "id": "perler-80-15245",
+        "code": "80-15245",
+        "name": "Iris",
+        "hex": "#4E56A3"
+      },
+      {
+        "id": "perler-80-15246",
+        "code": "80-15246",
+        "name": "Tangerine",
+        "hex": "#FD5918"
+      },
+      {
+        "id": "perler-80-15247",
+        "code": "80-15247",
+        "name": "Forest",
+        "hex": "#005D57"
+      },
+      {
+        "id": "perler-80-15248",
+        "code": "80-15248",
+        "name": "Eggplant",
+        "hex": "#6F3255"
+      },
+      {
+        "id": "perler-80-15249",
+        "code": "80-15249",
+        "name": "Honey",
+        "hex": "#DA8C2C"
+      },
+      {
+        "id": "perler-80-15250",
+        "code": "80-15250",
+        "name": "Gingerbread",
+        "hex": "#7E5446"
+      },
+      {
+        "id": "perler-80-15251",
+        "code": "80-15251",
+        "name": "Thistle",
+        "hex": "#8C8CA7"
+      },
+      {
+        "id": "perler-80-15252",
+        "code": "80-15252",
+        "name": "Slate Blue",
+        "hex": "#5E6D7B"
+      },
+      {
+        "id": "perler-80-15253",
+        "code": "80-15253",
+        "name": "Denim",
+        "hex": "#4C6388"
+      },
+      {
+        "id": "perler-80-15254",
+        "code": "80-15254",
+        "name": "Sage",
+        "hex": "#9AA98E"
+      },
+      {
+        "id": "perler-80-15255",
+        "code": "80-15255",
+        "name": "Orange Cream",
+        "hex": "#EFB79B"
+      },
+      {
+        "id": "perler-80-15256",
+        "code": "80-15256",
+        "name": "Fruit Punch",
+        "hex": "#CA3B65"
+      },
+      {
+        "id": "perler-80-15257",
+        "code": "80-15257",
+        "name": "Fuchsia",
+        "hex": "#CB59B9"
+      },
+      {
+        "id": "perler-80-15258",
+        "code": "80-15258",
+        "name": "Mulberry",
+        "hex": "#714875"
+      },
+      {
+        "id": "perler-80-15259",
+        "code": "80-15259",
+        "name": "Slime",
+        "hex": "#C8C85C"
+      },
+      {
+        "id": "perler-80-15260",
+        "code": "80-15260",
+        "name": "Stone",
+        "hex": "#988C8C"
+      },
+      {
+        "id": "perler-80-15261",
+        "code": "80-15261",
+        "name": "Dark Spruce",
+        "hex": "#14313B"
+      },
+      {
+        "id": "perler-80-15262",
+        "code": "80-15262",
+        "name": "Cocoa",
+        "hex": "#392928"
+      },
+      {
+        "id": "perler-80-15265",
+        "code": "80-15265",
+        "name": "Twilight Plum",
+        "hex": "#C685B1"
+      },
+      {
+        "id": "perler-80-15266",
+        "code": "80-15266",
+        "name": "Caribbean Sea",
+        "hex": "#6CC8AD"
+      },
+      {
+        "id": "perler-80-15267",
+        "code": "80-15267",
+        "name": "Frosted Lilac",
+        "hex": "#CDB7C3"
+      },
+      {
+        "id": "perler-80-15273",
+        "code": "80-15273",
+        "name": "Brick",
+        "hex": "#FC9574"
+      },
+      {
+        "id": "perler-80-15274",
+        "code": "80-15274",
+        "name": "Rich Butter",
+        "hex": "#F6CA69"
+      },
+      {
+        "id": "perler-80-15275",
+        "code": "80-15275",
+        "name": "Peacock",
+        "hex": "#0090AC"
+      },
+      {
+        "id": "perler-80-15276",
+        "code": "80-15276",
+        "name": "Carnation Pink",
+        "hex": "#F8C7C9"
+      },
+      {
+        "id": "perler-80-15089",
+        "code": "80-15089",
+        "name": "Neon Blue",
+        "hex": "#406AE1"
+      },
+      {
+        "id": "perler-80-15268",
+        "code": "80-15268",
+        "name": "Sunflower",
+        "hex": "#DEBA0B"
+      },
+      {
+        "id": "perler-80-15269",
+        "code": "80-15269",
+        "name": "Lemon",
+        "hex": "#F6D901"
+      },
+      {
+        "id": "perler-80-15263",
+        "code": "80-15263",
+        "name": "Celery",
+        "hex": "#BED4A6"
+      },
+      {
+        "id": "perler-80-15239",
+        "code": "80-15239",
+        "name": "Mocha",
+        "hex": "#C8B693"
+      },
+      {
+        "id": "perler-80-15272",
+        "code": "80-15272",
+        "name": "Coral",
+        "hex": "#FF9A8B"
+      }
+    ]
+  },
+  {
+    "id": "nabbi",
+    "brand": "nabbi",
+    "brandLabel": "Nabbi",
+    "name": "Nabbi",
+    "source": "beadcolors",
+    "colors": [
+      {
+        "id": "nabbi-N01",
+        "code": "N01",
+        "name": "Black",
+        "hex": "#3A3D41"
+      },
+      {
+        "id": "nabbi-N02",
+        "code": "N02",
+        "name": "Dark Brown",
+        "hex": "#50443B"
+      },
+      {
+        "id": "nabbi-N03",
+        "code": "N03",
+        "name": "Brown Medium",
+        "hex": "#5A3E36"
+      },
+      {
+        "id": "nabbi-N04",
+        "code": "N04",
+        "name": "Maroon",
+        "hex": "#813547"
+      },
+      {
+        "id": "nabbi-N05",
+        "code": "N05",
+        "name": "Caramel",
+        "hex": "#A76224"
+      },
+      {
+        "id": "nabbi-N06",
+        "code": "N06",
+        "name": "Tan",
+        "hex": "#AD967E"
+      },
+      {
+        "id": "nabbi-N07",
+        "code": "N07",
+        "name": "Sand",
+        "hex": "#EEB182"
+      },
+      {
+        "id": "nabbi-N08",
+        "code": "N08",
+        "name": "Ash",
+        "hex": "#8D8B7F"
+      },
+      {
+        "id": "nabbi-N09",
+        "code": "N09",
+        "name": "Hunter Green",
+        "hex": "#2F4A39"
+      },
+      {
+        "id": "nabbi-N10",
+        "code": "N10",
+        "name": "Light Grey",
+        "hex": "#D3CBCB"
+      },
+      {
+        "id": "nabbi-N11",
+        "code": "N11",
+        "name": "Purple",
+        "hex": "#644591"
+      },
+      {
+        "id": "nabbi-N12",
+        "code": "N12",
+        "name": "Ivory",
+        "hex": "#E2D0BF"
+      },
+      {
+        "id": "nabbi-N13",
+        "code": "N13",
+        "name": "Orange",
+        "hex": "#F3601B"
+      },
+      {
+        "id": "nabbi-N14",
+        "code": "N14",
+        "name": "Yellow",
+        "hex": "#F9CA00"
+      },
+      {
+        "id": "nabbi-N15",
+        "code": "N15",
+        "name": "White",
+        "hex": "#F4F4F3"
+      },
+      {
+        "id": "nabbi-N16",
+        "code": "N16",
+        "name": "Green",
+        "hex": "#297A3B"
+      },
+      {
+        "id": "nabbi-N17",
+        "code": "N17",
+        "name": "Bright Blue",
+        "hex": "#3B75CB"
+      },
+      {
+        "id": "nabbi-N18",
+        "code": "N18",
+        "name": "Light Rose",
+        "hex": "#E1B4AB"
+      },
+      {
+        "id": "nabbi-N19",
+        "code": "N19",
+        "name": "Red",
+        "hex": "#DF2638"
+      },
+      {
+        "id": "nabbi-N20",
+        "code": "N20",
+        "name": "Light Brown",
+        "hex": "#B58B69"
+      },
+      {
+        "id": "nabbi-N21",
+        "code": "N21",
+        "name": "Light Yellow",
+        "hex": "#F5EC8D"
+      },
+      {
+        "id": "nabbi-N22",
+        "code": "N22",
+        "name": "Lime",
+        "hex": "#48AF4F"
+      },
+      {
+        "id": "nabbi-N23",
+        "code": "N23",
+        "name": "Medium Blue",
+        "hex": "#71A3E6"
+      },
+      {
+        "id": "nabbi-N24",
+        "code": "N24",
+        "name": "Lavender",
+        "hex": "#B6A0DB"
+      },
+      {
+        "id": "nabbi-N25",
+        "code": "N25",
+        "name": "Pink",
+        "hex": "#EE6A97"
+      },
+      {
+        "id": "nabbi-N26",
+        "code": "N26",
+        "name": "Peach",
+        "hex": "#FCA879"
+      },
+      {
+        "id": "nabbi-N27",
+        "code": "N27",
+        "name": "Chocolate",
+        "hex": "#875F52"
+      },
+      {
+        "id": "nabbi-N28",
+        "code": "N28",
+        "name": "Sky",
+        "hex": "#A7C6F1"
+      },
+      {
+        "id": "nabbi-N29",
+        "code": "N29",
+        "name": "Gold",
+        "hex": "#EE9527"
+      },
+      {
+        "id": "nabbi-N30",
+        "code": "N30",
+        "name": "Kiwi",
+        "hex": "#C7BF5E"
+      }
+    ]
+  },
+  {
+    "id": "artkal-s",
+    "brand": "artkal",
+    "brandLabel": "Artkal",
+    "name": "Artkal S (5 mm)",
+    "source": "beadcolors",
+    "colors": [
+      {
+        "id": "artkal-s-S01",
+        "code": "S01",
+        "name": "White",
+        "hex": "#EAEEF3"
+      },
+      {
+        "id": "artkal-s-S02",
+        "code": "S02",
+        "name": "Burning Sand",
+        "hex": "#EE927C"
+      },
+      {
+        "id": "artkal-s-S03",
+        "code": "S03",
+        "name": "Tangerine",
+        "hex": "#FFA630"
+      },
+      {
+        "id": "artkal-s-S04",
+        "code": "S04",
+        "name": "Orange",
+        "hex": "#EB6027"
+      },
+      {
+        "id": "artkal-s-S05",
+        "code": "S05",
+        "name": "Tall Poppy",
+        "hex": "#CB3531"
+      },
+      {
+        "id": "artkal-s-S06",
+        "code": "S06",
+        "name": "Raspberry Pink",
+        "hex": "#EF67B2"
+      },
+      {
+        "id": "artkal-s-S07",
+        "code": "S07",
+        "name": "Gray",
+        "hex": "#959698"
+      },
+      {
+        "id": "artkal-s-S08",
+        "code": "S08",
+        "name": "Emerald",
+        "hex": "#1FC467"
+      },
+      {
+        "id": "artkal-s-S09",
+        "code": "S09",
+        "name": "Dark Green",
+        "hex": "#00685E"
+      },
+      {
+        "id": "artkal-s-S10",
+        "code": "S10",
+        "name": "Baby Blue",
+        "hex": "#2EABD8"
+      },
+      {
+        "id": "artkal-s-S11",
+        "code": "S11",
+        "name": "Dark Blue",
+        "hex": "#004FA4"
+      },
+      {
+        "id": "artkal-s-S12",
+        "code": "S12",
+        "name": "Pastel Lavender",
+        "hex": "#9165B2"
+      },
+      {
+        "id": "artkal-s-S13",
+        "code": "S13",
+        "name": "Black",
+        "hex": "#292A2B"
+      },
+      {
+        "id": "artkal-s-S14",
+        "code": "S14",
+        "name": "Sandstorm",
+        "hex": "#E1C835"
+      },
+      {
+        "id": "artkal-s-S15",
+        "code": "S15",
+        "name": "Redwood",
+        "hex": "#9A4541"
+      },
+      {
+        "id": "artkal-s-S16",
+        "code": "S16",
+        "name": "Brown",
+        "hex": "#65463D"
+      },
+      {
+        "id": "artkal-s-S17",
+        "code": "S17",
+        "name": "Light Brown",
+        "hex": "#895D49"
+      },
+      {
+        "id": "artkal-s-S18",
+        "code": "S18",
+        "name": "Sand",
+        "hex": "#DCA384"
+      },
+      {
+        "id": "artkal-s-S19",
+        "code": "S19",
+        "name": "Bubble Gun",
+        "hex": "#F2BFB8"
+      },
+      {
+        "id": "artkal-s-S20",
+        "code": "S20",
+        "name": "Green",
+        "hex": "#009053"
+      },
+      {
+        "id": "artkal-s-S21",
+        "code": "S21",
+        "name": "Pastel Green",
+        "hex": "#8BB23A"
+      },
+      {
+        "id": "artkal-s-S22",
+        "code": "S22",
+        "name": "Purple",
+        "hex": "#48337E"
+      },
+      {
+        "id": "artkal-s-S23",
+        "code": "S23",
+        "name": "Royal Purple",
+        "hex": "#644FA4"
+      },
+      {
+        "id": "artkal-s-S24",
+        "code": "S24",
+        "name": "True Blue",
+        "hex": "#0078BF"
+      },
+      {
+        "id": "artkal-s-S25",
+        "code": "S25",
+        "name": "Hot Pink",
+        "hex": "#DC519A"
+      },
+      {
+        "id": "artkal-s-S26",
+        "code": "S26",
+        "name": "Magenta",
+        "hex": "#DA4383"
+      },
+      {
+        "id": "artkal-s-S27",
+        "code": "S27",
+        "name": "Yellow",
+        "hex": "#EAC125"
+      },
+      {
+        "id": "artkal-s-S28",
+        "code": "S28",
+        "name": "Lily Pink",
+        "hex": "#DDA1CC"
+      },
+      {
+        "id": "artkal-s-S29",
+        "code": "S29",
+        "name": "Pastel Yellow",
+        "hex": "#E1D367"
+      },
+      {
+        "id": "artkal-s-S30",
+        "code": "S30",
+        "name": "Shadow Green",
+        "hex": "#9EC9CD"
+      },
+      {
+        "id": "artkal-s-S31",
+        "code": "S31",
+        "name": "Sea Mist",
+        "hex": "#B2D7CE"
+      },
+      {
+        "id": "artkal-s-S32",
+        "code": "S32",
+        "name": "Beeswax",
+        "hex": "#EED39E"
+      },
+      {
+        "id": "artkal-s-S33",
+        "code": "S33",
+        "name": "Maverick",
+        "hex": "#C0B7D7"
+      },
+      {
+        "id": "artkal-s-S34",
+        "code": "S34",
+        "name": "Red",
+        "hex": "#B61927"
+      },
+      {
+        "id": "artkal-s-S35",
+        "code": "S35",
+        "name": "Mona Lisa",
+        "hex": "#E1CCD2"
+      },
+      {
+        "id": "artkal-s-S36",
+        "code": "S36",
+        "name": "Old Pink",
+        "hex": "#CE6D83"
+      },
+      {
+        "id": "artkal-s-S37",
+        "code": "S37",
+        "name": "Blue-Green",
+        "hex": "#60BFCB"
+      },
+      {
+        "id": "artkal-s-S38",
+        "code": "S38",
+        "name": "Burgundy",
+        "hex": "#A3134A"
+      },
+      {
+        "id": "artkal-s-S39",
+        "code": "S39",
+        "name": "Yellow Orange",
+        "hex": "#E68739"
+      },
+      {
+        "id": "artkal-s-S40",
+        "code": "S40",
+        "name": "Carnation Pink",
+        "hex": "#E182B0"
+      },
+      {
+        "id": "artkal-s-S41",
+        "code": "S41",
+        "name": "Copper",
+        "hex": "#9D5B2E"
+      },
+      {
+        "id": "artkal-s-S42",
+        "code": "S42",
+        "name": "Silver",
+        "hex": "#676B73"
+      },
+      {
+        "id": "artkal-s-S43",
+        "code": "S43",
+        "name": "Dark Gray",
+        "hex": "#70757B"
+      },
+      {
+        "id": "artkal-s-S44",
+        "code": "S44",
+        "name": "Sky Blue",
+        "hex": "#A7CDDE"
+      },
+      {
+        "id": "artkal-s-S45",
+        "code": "S45",
+        "name": "Medium Turquoise",
+        "hex": "#00A5A1"
+      },
+      {
+        "id": "artkal-s-S46",
+        "code": "S46",
+        "name": "Bright Green",
+        "hex": "#8EC324"
+      },
+      {
+        "id": "artkal-s-S47",
+        "code": "S47",
+        "name": "Marigold",
+        "hex": "#B27938"
+      },
+      {
+        "id": "artkal-s-S48",
+        "code": "S48",
+        "name": "Corn",
+        "hex": "#ECC03D"
+      },
+      {
+        "id": "artkal-s-S49",
+        "code": "S49",
+        "name": "Mulberry Wood",
+        "hex": "#921E5D"
+      },
+      {
+        "id": "artkal-s-S50",
+        "code": "S50",
+        "name": "Mandys Pink",
+        "hex": "#E2A488"
+      },
+      {
+        "id": "artkal-s-S51",
+        "code": "S51",
+        "name": "Spring Sun",
+        "hex": "#DFDABD"
+      },
+      {
+        "id": "artkal-s-S52",
+        "code": "S52",
+        "name": "Picasso",
+        "hex": "#EADE7F"
+      },
+      {
+        "id": "artkal-s-S53",
+        "code": "S53",
+        "name": "Turquoise",
+        "hex": "#55A4D9"
+      },
+      {
+        "id": "artkal-s-S54",
+        "code": "S54",
+        "name": "Light Blue",
+        "hex": "#0084CE"
+      },
+      {
+        "id": "artkal-s-S55",
+        "code": "S55",
+        "name": "Pistachio",
+        "hex": "#97CF87"
+      },
+      {
+        "id": "artkal-s-S56",
+        "code": "S56",
+        "name": "Bright Carrot",
+        "hex": "#F96F40"
+      },
+      {
+        "id": "artkal-s-S57",
+        "code": "S57",
+        "name": "Buccaneer",
+        "hex": "#B35540"
+      },
+      {
+        "id": "artkal-s-S58",
+        "code": "S58",
+        "name": "Paprika",
+        "hex": "#B11836"
+      },
+      {
+        "id": "artkal-s-S59",
+        "code": "S59",
+        "name": "Butterfly Bush",
+        "hex": "#4F3989"
+      },
+      {
+        "id": "artkal-s-S60",
+        "code": "S60",
+        "name": "Lavender",
+        "hex": "#8A7EC2"
+      },
+      {
+        "id": "artkal-s-S61",
+        "code": "S61",
+        "name": "Key Lomen Pie",
+        "hex": "#CDC03F"
+      },
+      {
+        "id": "artkal-s-S62",
+        "code": "S62",
+        "name": "Green Tea",
+        "hex": "#00765F"
+      },
+      {
+        "id": "artkal-s-S63",
+        "code": "S63",
+        "name": "Metallic Gold",
+        "hex": "#696046",
+        "special": true
+      },
+      {
+        "id": "artkal-s-S64",
+        "code": "S64",
+        "name": "Black Rock",
+        "hex": "#36384D"
+      },
+      {
+        "id": "artkal-s-S65",
+        "code": "S65",
+        "name": "Canary",
+        "hex": "#E2E65D"
+      },
+      {
+        "id": "artkal-s-S66",
+        "code": "S66",
+        "name": "Blaze Orange",
+        "hex": "#E5533C"
+      },
+      {
+        "id": "artkal-s-S67",
+        "code": "S67",
+        "name": "Vanilla",
+        "hex": "#E9C1A6"
+      },
+      {
+        "id": "artkal-s-S68",
+        "code": "S68",
+        "name": "Tan",
+        "hex": "#CC9B74"
+      },
+      {
+        "id": "artkal-s-S69",
+        "code": "S69",
+        "name": "Mine Shaft",
+        "hex": "#383E44"
+      },
+      {
+        "id": "artkal-s-S70",
+        "code": "S70",
+        "name": "Drark Algae",
+        "hex": "#ADAD29"
+      },
+      {
+        "id": "artkal-s-S71",
+        "code": "S71",
+        "name": "Jade Green",
+        "hex": "#007D2B"
+      },
+      {
+        "id": "artkal-s-S72",
+        "code": "S72",
+        "name": "Light Sea Blue",
+        "hex": "#68C4D2"
+      },
+      {
+        "id": "artkal-s-S73",
+        "code": "S73",
+        "name": "Steel Blue",
+        "hex": "#5AB0BF"
+      },
+      {
+        "id": "artkal-s-S74",
+        "code": "S74",
+        "name": "Azure",
+        "hex": "#009EC2"
+      },
+      {
+        "id": "artkal-s-S75",
+        "code": "S75",
+        "name": "Dark Steel Blue",
+        "hex": "#0084B2"
+      },
+      {
+        "id": "artkal-s-S76",
+        "code": "S76",
+        "name": "Sea Blue",
+        "hex": "#0093A9"
+      },
+      {
+        "id": "artkal-s-S77",
+        "code": "S77",
+        "name": "Ghost While",
+        "hex": "#D4D8D3"
+      },
+      {
+        "id": "artkal-s-S78",
+        "code": "S78",
+        "name": "Ash Grey",
+        "hex": "#C2C4C2"
+      },
+      {
+        "id": "artkal-s-S79",
+        "code": "S79",
+        "name": "Light Gray",
+        "hex": "#A7ACAD"
+      },
+      {
+        "id": "artkal-s-S80",
+        "code": "S80",
+        "name": "Dark Olive",
+        "hex": "#8F8E3C"
+      },
+      {
+        "id": "artkal-s-S81",
+        "code": "S81",
+        "name": "Deer",
+        "hex": "#BF9168"
+      },
+      {
+        "id": "artkal-s-S82",
+        "code": "S82",
+        "name": "Clay",
+        "hex": "#AA744E"
+      },
+      {
+        "id": "artkal-s-S83",
+        "code": "S83",
+        "name": "Sienna",
+        "hex": "#BB6833"
+      },
+      {
+        "id": "artkal-s-S84",
+        "code": "S84",
+        "name": "Deep Chestnut",
+        "hex": "#BE5D65"
+      },
+      {
+        "id": "artkal-s-S85",
+        "code": "S85",
+        "name": "Red Wine",
+        "hex": "#99323A"
+      },
+      {
+        "id": "artkal-s-S86",
+        "code": "S86",
+        "name": "Goldenrod",
+        "hex": "#E8AE00"
+      },
+      {
+        "id": "artkal-s-S87",
+        "code": "S87",
+        "name": "Coral Red",
+        "hex": "#EC625E"
+      },
+      {
+        "id": "artkal-s-S88",
+        "code": "S88",
+        "name": "Dark Pink",
+        "hex": "#D62779"
+      },
+      {
+        "id": "artkal-s-S89",
+        "code": "S89",
+        "name": "Charcoal Gray",
+        "hex": "#565A5E"
+      },
+      {
+        "id": "artkal-s-S90",
+        "code": "S90",
+        "name": "Pastel Orange",
+        "hex": "#D9B35E"
+      },
+      {
+        "id": "artkal-s-S91",
+        "code": "S91",
+        "name": "Brunswick Green",
+        "hex": "#153838"
+      },
+      {
+        "id": "artkal-s-S92",
+        "code": "S92",
+        "name": "Dandelion",
+        "hex": "#CEA433"
+      },
+      {
+        "id": "artkal-s-S93",
+        "code": "S93",
+        "name": "Pale Skin",
+        "hex": "#DCB794"
+      },
+      {
+        "id": "artkal-s-S94",
+        "code": "S94",
+        "name": "Warm Blush",
+        "hex": "#DD9285"
+      },
+      {
+        "id": "artkal-s-S95",
+        "code": "S95",
+        "name": "Salmon",
+        "hex": "#E07B69"
+      },
+      {
+        "id": "artkal-s-S96",
+        "code": "S96",
+        "name": "Apricot",
+        "hex": "#EF7F61"
+      },
+      {
+        "id": "artkal-s-S97",
+        "code": "S97",
+        "name": "Papaya",
+        "hex": "#DC772B"
+      },
+      {
+        "id": "artkal-s-S98",
+        "code": "S98",
+        "name": "Himalaya Blue",
+        "hex": "#6AAEDB"
+      },
+      {
+        "id": "artkal-s-S99",
+        "code": "S99",
+        "name": "Waterfall",
+        "hex": "#61BBD3"
+      },
+      {
+        "id": "artkal-s-S100",
+        "code": "S100",
+        "name": "Lagoon",
+        "hex": "#279BBE"
+      },
+      {
+        "id": "artkal-s-S101",
+        "code": "S101",
+        "name": "Electric Blue",
+        "hex": "#00A7E3"
+      },
+      {
+        "id": "artkal-s-S102",
+        "code": "S102",
+        "name": "Pool Blue",
+        "hex": "#0077CA"
+      },
+      {
+        "id": "artkal-s-S103",
+        "code": "S103",
+        "name": "Caribbian Blue",
+        "hex": "#005AA9"
+      },
+      {
+        "id": "artkal-s-S104",
+        "code": "S104",
+        "name": "Deep Water",
+        "hex": "#007F9E"
+      },
+      {
+        "id": "artkal-s-S105",
+        "code": "S105",
+        "name": "Petrol Blue",
+        "hex": "#007D91"
+      },
+      {
+        "id": "artkal-s-S106",
+        "code": "S106",
+        "name": "Wegdewood Blue",
+        "hex": "#00649A"
+      },
+      {
+        "id": "artkal-s-S107",
+        "code": "S107",
+        "name": "Pond Blue",
+        "hex": "#006C9F"
+      },
+      {
+        "id": "artkal-s-S108",
+        "code": "S108",
+        "name": "Seashell Beige",
+        "hex": "#CFC179"
+      },
+      {
+        "id": "artkal-s-S109",
+        "code": "S109",
+        "name": "Beige",
+        "hex": "#C4AE64"
+      },
+      {
+        "id": "artkal-s-S110",
+        "code": "S110",
+        "name": "Beach Beige",
+        "hex": "#AB9745"
+      },
+      {
+        "id": "artkal-s-S111",
+        "code": "S111",
+        "name": "Caffe Latté",
+        "hex": "#978138"
+      },
+      {
+        "id": "artkal-s-S112",
+        "code": "S112",
+        "name": "Oaktree Brown",
+        "hex": "#907C41"
+      },
+      {
+        "id": "artkal-s-S113",
+        "code": "S113",
+        "name": "Khaki",
+        "hex": "#B6AE84"
+      },
+      {
+        "id": "artkal-s-S114",
+        "code": "S114",
+        "name": "Light Greengray",
+        "hex": "#A59F65"
+      },
+      {
+        "id": "artkal-s-S115",
+        "code": "S115",
+        "name": "Mossy Green",
+        "hex": "#938D54"
+      },
+      {
+        "id": "artkal-s-S116",
+        "code": "S116",
+        "name": "Earth Green",
+        "hex": "#8D8B51"
+      },
+      {
+        "id": "artkal-s-S117",
+        "code": "S117",
+        "name": "Sage Green",
+        "hex": "#7F7E49"
+      },
+      {
+        "id": "artkal-s-S118",
+        "code": "S118",
+        "name": "Pinetree Green",
+        "hex": "#5B6E35"
+      },
+      {
+        "id": "artkal-s-S119",
+        "code": "S119",
+        "name": "Frosty Blue",
+        "hex": "#8AD5C9"
+      },
+      {
+        "id": "artkal-s-S120",
+        "code": "S120",
+        "name": "Polar Mint",
+        "hex": "#7CD2A5"
+      },
+      {
+        "id": "artkal-s-S121",
+        "code": "S121",
+        "name": "Celadon Green",
+        "hex": "#72AC9A"
+      },
+      {
+        "id": "artkal-s-S122",
+        "code": "S122",
+        "name": "Eucalyptus",
+        "hex": "#00B26F"
+      },
+      {
+        "id": "artkal-s-S123",
+        "code": "S123",
+        "name": "Clover Field",
+        "hex": "#3EB724"
+      },
+      {
+        "id": "artkal-s-S124",
+        "code": "S124",
+        "name": "Pooltable Felt",
+        "hex": "#0D7535"
+      },
+      {
+        "id": "artkal-s-S125",
+        "code": "S125",
+        "name": "Snake Green",
+        "hex": "#007D6E"
+      },
+      {
+        "id": "artkal-s-S126",
+        "code": "S126",
+        "name": "Dark Eucalyptus",
+        "hex": "#006E69"
+      },
+      {
+        "id": "artkal-s-S127",
+        "code": "S127",
+        "name": "Marsmallow Rose",
+        "hex": "#DFC3E1"
+      },
+      {
+        "id": "artkal-s-S128",
+        "code": "S128",
+        "name": "Light Grape",
+        "hex": "#D38ED4"
+      },
+      {
+        "id": "artkal-s-S129",
+        "code": "S129",
+        "name": "Rosebud Pink",
+        "hex": "#D5A6BA"
+      },
+      {
+        "id": "artkal-s-S130",
+        "code": "S130",
+        "name": "Fuschia",
+        "hex": "#D6668E"
+      },
+      {
+        "id": "artkal-s-S131",
+        "code": "S131",
+        "name": "Candy Violet",
+        "hex": "#B8AAD9"
+      },
+      {
+        "id": "artkal-s-S132",
+        "code": "S132",
+        "name": "Flamingo",
+        "hex": "#DF486D"
+      },
+      {
+        "id": "artkal-s-S133",
+        "code": "S133",
+        "name": "Pink Plum",
+        "hex": "#BC3CA6"
+      },
+      {
+        "id": "artkal-s-S134",
+        "code": "S134",
+        "name": "Amethyst",
+        "hex": "#803897"
+      },
+      {
+        "id": "artkal-s-S135",
+        "code": "S135",
+        "name": "Moonlight Blue",
+        "hex": "#A7BAE1"
+      },
+      {
+        "id": "artkal-s-S136",
+        "code": "S136",
+        "name": "Summer Rain",
+        "hex": "#AFB8DF"
+      },
+      {
+        "id": "artkal-s-S137",
+        "code": "S137",
+        "name": "Azur Blue",
+        "hex": "#6B9AD4"
+      },
+      {
+        "id": "artkal-s-S138",
+        "code": "S138",
+        "name": "Cornflower Blue",
+        "hex": "#5A89CE"
+      },
+      {
+        "id": "artkal-s-S139",
+        "code": "S139",
+        "name": "Forget Me Not",
+        "hex": "#658AD0"
+      },
+      {
+        "id": "artkal-s-S140",
+        "code": "S140",
+        "name": "Indigo",
+        "hex": "#566CBD"
+      },
+      {
+        "id": "artkal-s-S141",
+        "code": "S141",
+        "name": "Horizon Blue",
+        "hex": "#4D74C6"
+      },
+      {
+        "id": "artkal-s-S142",
+        "code": "S142",
+        "name": "Cobolt",
+        "hex": "#416DBE"
+      },
+      {
+        "id": "artkal-s-S143",
+        "code": "S143",
+        "name": "Royal Blue",
+        "hex": "#30429E"
+      },
+      {
+        "id": "artkal-s-S144",
+        "code": "S144",
+        "name": "Marine",
+        "hex": "#024288"
+      },
+      {
+        "id": "artkal-s-S145",
+        "code": "S145",
+        "name": "Pale Yellow Moss",
+        "hex": "#D6CA6A"
+      },
+      {
+        "id": "artkal-s-S146",
+        "code": "S146",
+        "name": "Bloodrose Red",
+        "hex": "#9D1A38"
+      },
+      {
+        "id": "artkal-s-S147",
+        "code": "S147",
+        "name": "Spearmint",
+        "hex": "#80B7A1"
+      },
+      {
+        "id": "artkal-s-S148",
+        "code": "S148",
+        "name": "Mocha",
+        "hex": "#7A594F"
+      },
+      {
+        "id": "artkal-s-S149",
+        "code": "S149",
+        "name": "Creme",
+        "hex": "#EFDBA1"
+      },
+      {
+        "id": "artkal-s-S150",
+        "code": "S150",
+        "name": "Iris Violet",
+        "hex": "#8884D0"
+      },
+      {
+        "id": "artkal-s-S151",
+        "code": "S151",
+        "name": "Forrest Green",
+        "hex": "#345621"
+      },
+      {
+        "id": "artkal-s-S152",
+        "code": "S152",
+        "name": "Lilac",
+        "hex": "#AEADDC"
+      },
+      {
+        "id": "artkal-s-S153",
+        "code": "S153",
+        "name": "Pale Lilac",
+        "hex": "#BCC3E1"
+      },
+      {
+        "id": "artkal-s-S154",
+        "code": "S154",
+        "name": "Sahara Sand",
+        "hex": "#E3C09A"
+      },
+      {
+        "id": "artkal-s-S155",
+        "code": "S155",
+        "name": "Sunkissed Teint",
+        "hex": "#C58B60"
+      },
+      {
+        "id": "artkal-s-S156",
+        "code": "S156",
+        "name": "Steel Grey",
+        "hex": "#5A5F65"
+      },
+      {
+        "id": "artkal-s-S157",
+        "code": "S157",
+        "name": "Iron Grey",
+        "hex": "#4C5156"
+      },
+      {
+        "id": "artkal-s-S158",
+        "code": "S158",
+        "name": "Pepper",
+        "hex": "#3A3E42"
+      },
+      {
+        "id": "artkal-s-S159",
+        "code": "S159",
+        "name": "Oslo Gray",
+        "hex": "#82878B"
+      },
+      {
+        "id": "artkal-s-SE1",
+        "code": "SE1",
+        "name": "Moon",
+        "hex": "#F1F4FA"
+      },
+      {
+        "id": "artkal-s-SE2",
+        "code": "SE2",
+        "name": "Raincloud",
+        "hex": "#A2B2D3"
+      },
+      {
+        "id": "artkal-s-SE3",
+        "code": "SE3",
+        "name": "Winter",
+        "hex": "#83A6DC"
+      },
+      {
+        "id": "artkal-s-SE4",
+        "code": "SE4",
+        "name": "Tide",
+        "hex": "#70D8ED"
+      },
+      {
+        "id": "artkal-s-SE5",
+        "code": "SE5",
+        "name": "Aquamarine",
+        "hex": "#69E3D5"
+      },
+      {
+        "id": "artkal-s-SE6",
+        "code": "SE6",
+        "name": "Neptune",
+        "hex": "#2A63C8"
+      },
+      {
+        "id": "artkal-s-SE7",
+        "code": "SE7",
+        "name": "Rose Quartz",
+        "hex": "#D5AEC9"
+      },
+      {
+        "id": "artkal-s-SE8",
+        "code": "SE8",
+        "name": "Mauve",
+        "hex": "#AF739A"
+      },
+      {
+        "id": "artkal-s-SE9",
+        "code": "SE9",
+        "name": "Dark Mauve",
+        "hex": "#704B6D"
+      },
+      {
+        "id": "artkal-s-SE10",
+        "code": "SE10",
+        "name": "Wild Berry",
+        "hex": "#D977CD"
+      },
+      {
+        "id": "artkal-s-SE11",
+        "code": "SE11",
+        "name": "Sugar Plum",
+        "hex": "#B643AC"
+      },
+      {
+        "id": "artkal-s-SE12",
+        "code": "SE12",
+        "name": "Desert",
+        "hex": "#DEB181"
+      },
+      {
+        "id": "artkal-s-SE13",
+        "code": "SE13",
+        "name": "Peanut",
+        "hex": "#BC9D77"
+      },
+      {
+        "id": "artkal-s-SE14",
+        "code": "SE14",
+        "name": "Toffee",
+        "hex": "#AC7F5D"
+      },
+      {
+        "id": "artkal-s-SE15",
+        "code": "SE15",
+        "name": "Bark",
+        "hex": "#A37E66"
+      },
+      {
+        "id": "artkal-s-SG1",
+        "code": "SG1",
+        "name": "Glow Yellow",
+        "hex": "#C6C0B4",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SG2",
+        "code": "SG2",
+        "name": "Glow Pink",
+        "hex": "#DFABBC",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SG3",
+        "code": "SG3",
+        "name": "Glow Blue",
+        "hex": "#6FADC1",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SL1",
+        "code": "SL1",
+        "name": "Glitter Blue",
+        "hex": "#3687B2",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SL2",
+        "code": "SL2",
+        "name": "Glitter Green",
+        "hex": "#117C52",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SL3",
+        "code": "SL3",
+        "name": "Glitter Red",
+        "hex": "#C22933",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SL4",
+        "code": "SL4",
+        "name": "Glitter Yellow",
+        "hex": "#CDBD00",
+        "special": true
+      },
+      {
+        "id": "artkal-s-SN1",
+        "code": "SN1",
+        "name": "Neon Orange",
+        "hex": "#FF7405"
+      },
+      {
+        "id": "artkal-s-SN2",
+        "code": "SN2",
+        "name": "Neon Green",
+        "hex": "#01C63E"
+      },
+      {
+        "id": "artkal-s-SN3",
+        "code": "SN3",
+        "name": "Neon Yellow",
+        "hex": "#F2F33C"
+      },
+      {
+        "id": "artkal-s-SN4",
+        "code": "SN4",
+        "name": "Neon Rose",
+        "hex": "#FF477A"
+      },
+      {
+        "id": "artkal-s-SP1",
+        "code": "SP1",
+        "name": "Pearlescent Green",
+        "hex": "#93CA87"
+      },
+      {
+        "id": "artkal-s-SP2",
+        "code": "SP2",
+        "name": "Pearlescent Tangerine",
+        "hex": "#FE7F54"
+      },
+      {
+        "id": "artkal-s-SP3",
+        "code": "SP3",
+        "name": "Pearlescent Orange",
+        "hex": "#F0A149"
+      },
+      {
+        "id": "artkal-s-SP4",
+        "code": "SP4",
+        "name": "Pearlescent Pink",
+        "hex": "#DC9EA9"
+      },
+      {
+        "id": "artkal-s-SP5",
+        "code": "SP5",
+        "name": "Pearlescent Red",
+        "hex": "#D63C53"
+      },
+      {
+        "id": "artkal-s-SP6",
+        "code": "SP6",
+        "name": "Pearlescent Blue",
+        "hex": "#2C4E97"
+      },
+      {
+        "id": "artkal-s-SP7",
+        "code": "SP7",
+        "name": "Pearlescent Purple",
+        "hex": "#64427E"
+      },
+      {
+        "id": "artkal-s-SP8",
+        "code": "SP8",
+        "name": "Pearlescent White",
+        "hex": "#E0DBCA"
+      },
+      {
+        "id": "artkal-s-ST1",
+        "code": "ST1",
+        "name": "Transparent",
+        "hex": "#C7BCB8",
+        "special": true
+      },
+      {
+        "id": "artkal-s-ST2",
+        "code": "ST2",
+        "name": "Transparent Pink",
+        "hex": "#F95498",
+        "special": true
+      },
+      {
+        "id": "artkal-s-ST3",
+        "code": "ST3",
+        "name": "Transparent Tangering",
+        "hex": "#FF7C45",
+        "special": true
+      },
+      {
+        "id": "artkal-s-ST4",
+        "code": "ST4",
+        "name": "Transparent Yellow",
+        "hex": "#DADF3D",
+        "special": true
+      },
+      {
+        "id": "artkal-s-ST5",
+        "code": "ST5",
+        "name": "Transparent Green",
+        "hex": "#0FAE58",
+        "special": true
+      },
+      {
+        "id": "artkal-s-ST6",
+        "code": "ST6",
+        "name": "Transparent Purple",
+        "hex": "#8477B3",
+        "special": true
+      }
+    ]
+  }
+]
