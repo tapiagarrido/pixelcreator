@@ -82,6 +82,38 @@ export const computeSheetLayout = (cols, rows, legendCount) => {
   return { cell, gutter, gridW, gridH, gridX, gridY, legendX, width, height };
 };
 
+// Celda (indice en `info.cells`) bajo un punto en coordenadas del canvas de la hoja; -1 si no hay.
+export const getCellIndexAt = (info, x, y) => {
+  const L = computeSheetLayout(info.widthBeads, info.heightBeads, info.colorUsage.length);
+  const col = Math.floor((x - L.gridX) / L.cell);
+  const row = Math.floor((y - L.gridY) / L.cell);
+  if (col < 0 || row < 0 || col >= info.widthBeads || row >= info.heightBeads) return -1;
+  return row * info.widthBeads + col;
+};
+
+// Solo las celdas de color, sin coordenadas ni leyenda.
+export const renderBeadsOnly = (info, cellPx = 24) => {
+  const cols = info.widthBeads;
+  const rows = info.heightBeads;
+  const canvas = document.createElement('canvas');
+  canvas.width = cols * cellPx;
+  canvas.height = rows * cellPx;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.lineWidth = 0.8;
+  info.cells.forEach((color, index) => {
+    if (!color) return;
+    const x = (index % cols) * cellPx;
+    const y = Math.floor(index / cols) * cellPx;
+    ctx.fillStyle = color.hex;
+    ctx.fillRect(x, y, cellPx, cellPx);
+    ctx.strokeRect(x, y, cellPx, cellPx);
+  });
+  return canvas;
+};
+
 const textColorFor = (hex) => {
   const { r, g, b } = hexToRgb(hex);
   return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? '#111111' : '#FFFFFF';

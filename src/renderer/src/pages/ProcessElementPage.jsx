@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { GrCaretNext, GrDownload } from 'react-icons/gr';
 import { useLocation } from 'react-router-dom';
 import PixelActions from '../components/process/PixelActions';
-import { renderPrintableSheet } from '../utils/printableSheet';
+import { getCellIndexAt, renderBeadsOnly, renderPrintableSheet } from '../utils/printableSheet';
+import { setCell, withCells } from '../utils/templateEdit';
+import { buildShoppingListCsv } from '../utils/shoppingList';
 import { buildTemplatePdf } from '../utils/exportPdf';
 import { DEFAULT_FILTERS, buildFilteredCanvas } from '../utils/imageFilters';
 
@@ -46,12 +48,21 @@ const ProcessElementPage = () => {
   const [showNumbers, setShowNumbers] = useState(false);
   const [boardSize, setBoardSize] = useState(29);
   const [exportingPdf, setExportingPdf] = useState(false);
+  // Edicion manual: herramienta activa, color del pincel e historial para deshacer/rehacer
+  const [tool, setTool] = useState('none'); // 'none' | 'paint' | 'pick' | 'erase'
+  const [brushColor, setBrushColor] = useState(null);
+  const [history, setHistory] = useState({ undo: [], redo: [] });
 
   const canvasRef = useRef(null);
+  const infoRef = useRef(null);
+  const strokeRef = useRef(null);
+  if (!strokeRef.current) infoRef.current = templateInfo;
 
   const clearResult = () => {
     setProcessedImage(null);
     setTemplateInfo(null);
+    setTool('none');
+    setHistory({ undo: [], redo: [] });
   };
 
   const handleImageSelected = (event) => {
@@ -112,6 +123,99 @@ const ProcessElementPage = () => {
   const handleProcessImage = (processedUrl, stats) => {
     setProcessedImage(processedUrl);
     setTemplateInfo(stats);
+    setHistory({ undo: [], redo: [] });
+    setBrushColor(stats.paletteColors?.[0] || null);
+  };
+
+  const MAX_HISTORY = 100;
+
+  const handleSelectTool = (nextTool) => {
+    setTool((current) => (current === nextTool ? 'none' : nextTool));
+  };
+
+  const handleUndo = () => {
+    if (history.undo.length === 0 || !templateInfo) return;
+    const previous = history.undo[history.undo.length - 1];
+    setHistory({ undo: history.undo.slice(0, -1), redo: [...history.redo, templateInfo.cells] });
+    setTemplateInfo(withCells(templateInfo, previous));
+  };
+
+  const handleRedo = () => {
+    if (history.redo.length === 0 || !templateInfo) return;
+    const next = history.redo[history.redo.length - 1];
+    setHistory({ undo: [...history.undo, templateInfo.cells], redo: history.redo.slice(0, -1) });
+    setTemplateInfo(withCells(templateInfo, next));
+  };
+
+  // Celda bajo el puntero (el canvas se muestra escalado por CSS)
+  const getPointerCell = (event) => {
+    const canvas = canvasRef.current;
+    const info = infoRef.current;
+    if (!canvas || !info) return -1;
+    const rect = canvas.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) * canvas.width) / rect.width;
+    const y = ((event.clientY - rect.top) * canvas.height) / rect.height;
+    return getCellIndexAt(info, x, y);
+  };
+
+  const editCell = (index) => {
+    const info = infoRef.current;
+    if (!info || index < 0) return;
+
+    if (tool === 'pick') {
+      const picked = info.cells[index];
+      if (picked) {
+        setBrushColor(picked);
+        setTool('paint');
+      }
+      strokeRef.current = null;
+      return;
+    }
+
+    const color = tool === 'erase' ? null : brushColor;
+    if (tool === 'paint' && !color) return;
+    const cells = setCell(info.cells, index, color);
+    if (cells === info.cells) return;
+    // La referencia se actualiza ya mismo: varios eventos del mismo trazo pueden llegar
+    // antes del siguiente render y no deben pisarse entre si.
+    const next = withCells(info, cells);
+    infoRef.current = next;
+    setTemplateInfo(next);
+  };
+
+  const handlePointerDown = (event) => {
+    if (tool === 'none' || !templateInfo) return;
+    const index = getPointerCell(event);
+    if (index < 0) return;
+    try {
+      // Mantiene el trazo aunque el puntero salga del canvas
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // puntero no capturable (p. ej. eventos sinteticos): se edita igual
+    }
+    strokeRef.current = { startCells: templateInfo.cells, lastIndex: index };
+    editCell(index);
+  };
+
+  const handlePointerMove = (event) => {
+    const stroke = strokeRef.current;
+    if (!stroke || tool === 'pick') return;
+    const index = getPointerCell(event);
+    if (index < 0 || index === stroke.lastIndex) return;
+    stroke.lastIndex = index;
+    editCell(index);
+  };
+
+  // Un trazo completo cuenta como un solo paso del historial
+  const handlePointerUp = () => {
+    const stroke = strokeRef.current;
+    strokeRef.current = null;
+    const info = infoRef.current;
+    if (!stroke || !info || info.cells === stroke.startCells) return;
+    setHistory((current) => ({
+      undo: [...current.undo, stroke.startCells].slice(-MAX_HISTORY),
+      redo: []
+    }));
   };
 
   const downloadDataUrl = (href, prefix) => {
@@ -150,7 +254,20 @@ const ProcessElementPage = () => {
 
   // Solo la imagen de beads, sin coordenadas ni leyenda
   const handleDownloadGridOnly = () => {
-    if (processedImage) downloadDataUrl(processedImage, 'plantilla-solo-beads');
+    if (templateInfo) downloadDataUrl(renderBeadsOnly(templateInfo).toDataURL('image/png'), 'plantilla-solo-beads');
+  };
+
+  // Lista de compra: beads necesarios por color
+  const handleDownloadCsv = () => {
+    if (!templateInfo) return;
+    const blob = new Blob([buildShoppingListCsv(templateInfo)], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const fecha = new Date();
+    link.download = `lista-beads-${fecha.getDate()}-${fecha.getMonth() + 1}-${fecha.getHours()}${fecha.getMinutes()}.csv`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
   };
 
   const handleRestartComponent = () => {
@@ -215,8 +332,16 @@ const ProcessElementPage = () => {
         </div>
 
         <div className='w-full lg:w-1/2 relative'>
-          <div className='max-h-[70vh] overflow-auto border border-gray-200 rounded-xl bg-white/40'>
-            <canvas ref={canvasRef} className="w-full px-8" />
+          <div className='max-h-[70vh] overflow-auto border border-gray-200 rounded-xl bg-white/40 p-4'>
+            <canvas
+              ref={canvasRef}
+              className={`w-full block ${tool === 'none' ? '' : 'cursor-crosshair'}`}
+              style={{ touchAction: tool === 'none' ? 'auto' : 'none' }}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+            />
           </div>
           {processedImage ? (
             <>
@@ -246,9 +371,63 @@ const ProcessElementPage = () => {
                 <button onClick={handleDownloadPdf} disabled={exportingPdf} className='px-3 py-1 text-black bg-amber-200 border border-amber-500 rounded-xl shadow-lg font-bold disabled:opacity-50'>
                   {exportingPdf ? 'Generando…' : 'Descargar PDF'}
                 </button>
+                <button onClick={handleDownloadCsv} className='px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl'>
+                  Lista (CSV)
+                </button>
                 <button onClick={handleDownloadGridOnly} className='px-3 py-1 text-black bg-gray-100 border border-gray-400 rounded-xl'>
                   Solo beads
                 </button>
+              </div>
+
+              <div className='font-changa w-full mt-3 text-base border border-gray-200 rounded-xl bg-white/60 p-3'>
+                <div className='flex flex-wrap items-center gap-2'>
+                  <span className='font-semibold'>Editar:</span>
+                  {[
+                    ['paint', 'Pincel'],
+                    ['pick', 'Pipeta'],
+                    ['erase', 'Borrar']
+                  ].map(([key, label]) => (
+                    <button
+                      key={key}
+                      onClick={() => handleSelectTool(key)}
+                      aria-pressed={tool === key}
+                      className={`px-3 py-1 rounded-xl border ${tool === key ? 'bg-blue-700 text-white border-blue-900' : 'bg-white border-gray-400'}`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                  <button onClick={handleUndo} disabled={history.undo.length === 0} className='px-3 py-1 rounded-xl border bg-white border-gray-400 disabled:opacity-40'>
+                    Deshacer
+                  </button>
+                  <button onClick={handleRedo} disabled={history.redo.length === 0} className='px-3 py-1 rounded-xl border bg-white border-gray-400 disabled:opacity-40'>
+                    Rehacer
+                  </button>
+                </div>
+
+                {tool !== 'none' ? (
+                  <div className='mt-2'>
+                    <div className='text-sm text-gray-600 mb-1'>
+                      {tool === 'paint' ? `Color del pincel: ${brushColor ? `${brushColor.code ? `${brushColor.code} · ` : ''}${brushColor.name}` : '-'}` : null}
+                      {tool === 'pick' ? 'Haz clic en una celda para copiar su color al pincel.' : null}
+                      {tool === 'erase' ? 'Haz clic o arrastra sobre las celdas para vaciarlas.' : null}
+                    </div>
+                    {tool === 'paint' ? (
+                      <div className='flex flex-wrap gap-1 max-h-24 overflow-y-auto p-1'>
+                        {(templateInfo?.paletteColors || []).map((color) => (
+                          <button
+                            key={color.id}
+                            title={`${color.code ? `${color.code} · ` : ''}${color.name}`}
+                            aria-label={`${color.code || ''} ${color.name}`}
+                            aria-pressed={brushColor?.id === color.id}
+                            onClick={() => setBrushColor(color)}
+                            style={{ backgroundColor: color.hex }}
+                            className={`w-6 h-6 rounded border ${brushColor?.id === color.id ? 'border-black ring-2 ring-blue-500' : 'border-black/20'}`}
+                          />
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
 
               {templateInfo ? (

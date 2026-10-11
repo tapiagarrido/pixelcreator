@@ -1,4 +1,5 @@
 import { hexToRgb } from './hamaPalette';
+import { buildTemplateStats } from './templateEdit';
 
 // Cantidad de celdas del eje libre cuando el otro eje tiene `count` celdas.
 // El epsilon evita que errores de coma flotante (58.00000000001) sumen una celda de mas.
@@ -195,38 +196,22 @@ export const buildBeadTemplate = (
   ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
   ctx.lineWidth = borderWidth;
 
-  const counter = new Map();
-  let emptyCells = 0;
-
   assigned.forEach((color, index) => {
-    if (!color) {
-      emptyCells += 1;
-      return;
-    }
+    if (!color) return;
     const cx = index % cellsW;
     const cy = Math.floor(index / cellsW);
     ctx.fillStyle = color.hex;
     ctx.fillRect(cx * cellPx, cy * cellPx, cellPx, cellPx);
     ctx.strokeRect(cx * cellPx, cy * cellPx, cellPx, cellPx);
-    counter.set(color.id, (counter.get(color.id) || 0) + 1);
   });
-
-  const colorUsage = Array.from(counter.entries())
-    .map(([id, count]) => {
-      const info = palette.colors.find((color) => color.id === id);
-      return { id, code: info?.code, name: info?.name || id, hex: info?.hex || '#000000', count };
-    })
-    .sort((a, b) => b.count - a.count);
 
   return {
     dataUrl: out.toDataURL('image/png'),
     stats: {
       widthBeads: cellsW,
       heightBeads: cellsH,
-      totalBeads: cellsW * cellsH - emptyCells,
-      emptyCells,
-      colorUsage,
-      cells: assigned
+      cells: assigned,
+      ...buildTemplateStats(assigned)
     }
   };
 };

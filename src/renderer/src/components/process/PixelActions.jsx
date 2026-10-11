@@ -152,6 +152,7 @@ const PixelActions = ({ imageIn, getSourceCanvas, onProcessImage, onRestart, def
         ...stats,
         paletteName: activePalette.name,
         brandLabel: activePalette.brandLabel,
+        paletteColors: activePalette.colors,
         brand: activePalette.brand,
         source: activePalette.source,
         sizingMode: sizeMode,
