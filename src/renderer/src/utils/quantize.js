@@ -137,8 +137,67 @@ const ditherGrid = (grid, cellsW, cellsH, prepared) => {
 };
 
 /**
+ * Elige hasta `maxColors` colores de la paleta que minimizan la diferencia de color total
+ * (seleccion voraz tipo k-mediana en Lab). A diferencia de quedarse con los mas usados,
+ * conserva colores poco frecuentes pero muy distintos (unos ojos rojos en una figura gris).
+ * Para que sea rapido con plantillas grandes, las celdas se agrupan por color aproximado.
+ */
+export const selectPaletteSubset = (grid, prepared, maxColors) => {
+  // 1) agrupar celdas por color (RGB a 6 bits por canal) con su peso
+  const buckets = new Map();
+  grid.forEach((cell) => {
+    if (!cell) return;
+    const key = ((cell.r >> 2) << 12) | ((cell.g >> 2) << 6) | (cell.b >> 2);
+    const bucket = buckets.get(key);
+    if (bucket) bucket.weight += 1;
+    else buckets.set(key, { cell, weight: 1 });
+  });
+
+  const items = [...buckets.values()];
+  if (items.length === 0) return prepared.slice(0, maxColors);
+
+  // 2) distancia (Delta E) de cada grupo a cada color de la paleta
+  const paletteSize = prepared.length;
+  const distances = items.map(({ cell }) => {
+    const lab = rgbToLab(cell);
+    return Float64Array.from(prepared, (entry) =>
+      Math.hypot(lab.l - entry.lab.l, lab.a - entry.lab.a, lab.b - entry.lab.b)
+    );
+  });
+
+  // 3) en cada paso se agrega el color que mas reduce el error total ponderado
+  const best = new Float64Array(items.length).fill(Number.POSITIVE_INFINITY);
+  const chosen = [];
+  const taken = new Set();
+
+  while (chosen.length < Math.min(maxColors, paletteSize)) {
+    let bestIndex = -1;
+    let bestCost = Number.POSITIVE_INFINITY;
+
+    for (let p = 0; p < paletteSize; p++) {
+      if (taken.has(p)) continue;
+      let cost = 0;
+      for (let i = 0; i < items.length; i++) {
+        cost += items[i].weight * Math.min(best[i], distances[i][p]);
+      }
+      if (cost < bestCost) {
+        bestCost = cost;
+        bestIndex = p;
+      }
+    }
+
+    if (bestIndex === -1) break;
+    taken.add(bestIndex);
+    chosen.push(bestIndex);
+    for (let i = 0; i < items.length; i++) best[i] = Math.min(best[i], distances[i][bestIndex]);
+  }
+
+  return chosen.map((index) => prepared[index]);
+};
+
+/**
  * Asigna un color de la paleta a cada celda de la grilla (null = celda vacia).
- * - maxColors > 0: se queda con los N colores de la paleta mas usados y re-mapea todo a ellos.
+ * - maxColors > 0: elige los N colores de la paleta que mejor representan la imagen y re-mapea todo a ellos.
  * - dither: difunde el error de cuantizacion (Floyd-Steinberg) para simular tonos intermedios.
  */
 export const quantizeGrid = (
@@ -154,21 +213,7 @@ export const quantizeGrid = (
   const nearest = (cell, palette) => (cell ? closestColor(rgbToLab(cell), palette) : null);
 
   if (maxColors > 0 && maxColors < prepared.length) {
-    const counts = new Map();
-    grid.forEach((cell) => {
-      const color = nearest(cell, prepared);
-      if (color) counts.set(color.id, (counts.get(color.id) || 0) + 1);
-    });
-
-    if (counts.size > maxColors) {
-      const keep = new Set(
-        [...counts.entries()]
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, maxColors)
-          .map(([id]) => id)
-      );
-      prepared = prepared.filter((entry) => keep.has(entry.color.id));
-    }
+    prepared = selectPaletteSubset(grid, prepared, maxColors);
   }
 
   if (dither) return ditherGrid(grid, cellsW, cellsH, prepared);

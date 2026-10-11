@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { cellsForAxis, computeCellGrid, quantizeGrid, rgbToLab } from './quantize';
+import {
+  cellsForAxis,
+  computeCellGrid,
+  quantizeGrid,
+  rgbToLab,
+  selectPaletteSubset
+} from './quantize';
 
 const palette = [
   { id: 'black', name: 'Negro', hex: '#000000' },
@@ -117,5 +123,58 @@ describe('cellsForAxis', () => {
   it('redondea hacia arriba cuando la proporcion no es exacta', () => {
     expect(cellsForAxis(300, 200, 10)).toBe(15);
     expect(cellsForAxis(301, 200, 10)).toBe(16);
+  });
+});
+
+describe('seleccion de colores con limite', () => {
+  const grays = [40, 80, 120, 160, 200, 240].map((v) => ({
+    id: `g${v}`,
+    name: `Gris ${v}`,
+    hex: `#${v.toString(16).padStart(2, '0').repeat(3).toUpperCase()}`
+  }));
+  const redColor = { id: 'red', name: 'Rojo', hex: '#FF0000' };
+  const colors = [...grays, redColor];
+
+  // Degradado de grises (200 celdas por tono) y una zona roja mas chica (150 celdas)
+  const gradient = grays.flatMap((g) =>
+    Array.from({ length: 200 }, () => ({
+      r: parseInt(g.hex.slice(1, 3), 16),
+      g: parseInt(g.hex.slice(1, 3), 16),
+      b: parseInt(g.hex.slice(1, 3), 16)
+    }))
+  );
+  const grid = [...gradient, ...Array.from({ length: 150 }, () => ({ r: 255, g: 0, b: 0 }))];
+
+  it('conserva un color poco frecuente pero muy distinto', () => {
+    const result = quantizeGrid(grid, grid.length, 1, colors, { maxColors: 3 });
+    const used = new Set(result.map((c) => c.id));
+    expect(used.size).toBeLessThanOrEqual(3);
+    expect(used.has('red')).toBe(true); // quedarse con los 3 mas usados lo habria perdido
+  });
+
+  it('respeta el maximo y reparte los grises a lo largo del rango', () => {
+    const subset = selectPaletteSubset(
+      grid,
+      colors.map((color) => ({
+        color,
+        lab: rgbToLab({
+          r: parseInt(color.hex.slice(1, 3), 16),
+          g: parseInt(color.hex.slice(3, 5), 16),
+          b: parseInt(color.hex.slice(5, 7), 16)
+        })
+      })),
+      4
+    );
+    expect(subset).toHaveLength(4);
+    const ids = subset.map((entry) => entry.color.id);
+    expect(ids).toContain('red');
+    const greyIds = ids.filter((id) => id !== 'red');
+    expect(greyIds.some((id) => ['g40', 'g80'].includes(id))).toBe(true);
+    expect(greyIds.some((id) => ['g200', 'g240'].includes(id))).toBe(true);
+  });
+
+  it('con una paleta menor que el maximo devuelve todo', () => {
+    const result = quantizeGrid(grid, grid.length, 1, colors, { maxColors: 50 });
+    expect(new Set(result.map((c) => c.id)).size).toBeGreaterThan(3);
   });
 });
